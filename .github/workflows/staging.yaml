@@ -27,4 +27,4 @@ jobs:
       run: npm install -g @angular/cli
     
     - name: Run unit tests with Karma
-      run: ng test -- --watch=false --browsers=ChromeHeadless
+      run: ng test --watch=false --browsers=ChromeHeadless
