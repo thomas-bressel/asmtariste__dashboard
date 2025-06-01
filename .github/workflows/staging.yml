@@ -24,4 +24,4 @@ jobs:
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./
-        server-dir: /dashboard-staging.asmtariste.fr/
+        server-dir: /dashboard-staging.asmtariste.fr/ 
