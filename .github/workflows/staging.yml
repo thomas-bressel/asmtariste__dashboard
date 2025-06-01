@@ -43,11 +43,11 @@ jobs:
     - name: Deploy to Staging FTP Server
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ${{ secrets.FTP_SERVER_STAGING }}
-        username: ${{ secrets.FTP_USERNAME_STAGING }}
-        password: ${{ secrets.FTP_PASSWORD_STAGING }}
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./
-        server-dir: /dashboard-staging/
+        server-dir: /dashboard-staging.asmtariste.fr/
         exclude: |
           **/.git*
           **/.git*/**
