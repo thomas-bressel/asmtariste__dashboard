@@ -48,17 +48,12 @@ jobs:
     
     - name: Build Angular app
       run: ng build --configuration production
-
-    - name: Check build output
-      run: ls -la dist/dashboard/browser
     
-    # Déploiement staging
     - name: Deploy to Staging
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      uses: sebastianpopp/ftp-action@releases/v2
       with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USER }}
+        host: ${{ secrets.FTP_SERVER }}
+        user: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: dist/dashboard/browser/
-        server-dir: /dashboard-staging.asmtariste.fr/
-        dangerous-clean-slate: false
+        localDir: dist/dashboard/browser/
+        remoteDir: /dashboard-staging.asmtariste.fr/
