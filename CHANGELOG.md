@@ -8,7 +8,7 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 ## [1.1.0] - 2025-06-01
 ### Main
  - Ajout du runner de build dans la pipeline CI pour github Actions.
- - Deploiment automatique sur le serveur de pre-production   .
+ - Deploiment automatique sur le serveur de pre-production.
 
 
 ## [1.0.0] - 2025-06-01
