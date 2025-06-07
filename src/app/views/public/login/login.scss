@@ -22,7 +22,7 @@
     }
 
     &__form {
-        gap: 1rem;
+        @include flex($direction: column, $gap: 1rem);
     }
 
     
