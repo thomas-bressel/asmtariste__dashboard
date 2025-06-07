@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'div[app-input-field]',
   imports: [CommonModule],
-  templateUrl: './input-field.html',
-  styleUrl: './input-field.scss'
+  templateUrl: './input-field.html'
 })
 export class InputField {
 

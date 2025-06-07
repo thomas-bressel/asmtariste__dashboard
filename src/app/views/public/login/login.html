@@ -17,6 +17,9 @@
         (fieldValue)="handlePasswordValueChanged($event)">
     </div>
 
+    @if(authForm().valid) {
+        <div app-button [type]="'submit'" [text]="'Se connecter'" [bgColor]="'purple'" [txtColor]="'white'" [borderColor]="'purple'" [shadowColor]="'purple'"></div>
+    }
 
 </form>
 

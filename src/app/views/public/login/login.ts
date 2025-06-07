@@ -4,6 +4,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 // services imports
 import { Form } from '@services/form'
+import { Button } from 'src/app/components/ui/button/button';
 
 // component imports
 import { InputField } from 'src/app/components/ui/input-field/input-field';
@@ -12,7 +13,7 @@ import { InputField } from 'src/app/components/ui/input-field/input-field';
   host: {
     'class': 'login'
   },
-  imports: [ReactiveFormsModule, InputField],
+  imports: [ReactiveFormsModule, InputField, Button],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
