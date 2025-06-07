@@ -1,0 +1,50 @@
+@use "fonts" as font;
+@use "colors" as color;
+
+.login {
+    gap: 2.5rem;
+    padding: 2rem;
+
+
+    &__header {
+        text-align: center;
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-family: font.$JakartaExtraBold;
+    }
+
+    &__hook {
+        font-size: 1rem;
+        font-family: font.$JakartaMedium;
+    }
+
+    &__form {
+        gap: 1rem;
+    }
+
+    
+    &__footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        display: flex;
+        justify-content: center;
+
+        width: 100%;
+        gap: .5rem;
+        padding: 1rem;
+        
+        &-logo {
+            max-width: 24px;
+            max-height: 24px;
+        }
+
+        &-hook {
+            font-size: 1rem;
+            font-family: font.$JakartaBold;
+        }
+    }
+}
