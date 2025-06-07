@@ -70,6 +70,10 @@ textarea::placeholder {
 // }
 
 
+.error {
+  @include text($color: color.$redlight, $size: .9rem);
+}
+
 
 
 // /* */

@@ -18,10 +18,12 @@ describe('Button', () => {
 
     fixture = TestBed.createComponent(Button);
     component = fixture.componentInstance;
+    fixture.detectChanges(); 
     debugElement = fixture.debugElement;
     buttonElement = debugElement.query(By.css('button')).nativeElement;
-    fixture.detectChanges();
   });
+
+
 
   describe('Component Creation', () => {
     it('should create', () => {
@@ -29,8 +31,9 @@ describe('Button', () => {
     });
   });
 
-  describe('Input Properties', () => {
 
+
+  describe('Input Properties', () => {
     it('should display text when text input is provided', () => {
       // Arrange
       fixture.componentRef.setInput('text', 'Cliquez ici');
@@ -131,4 +134,9 @@ describe('Button', () => {
       expect(textSpan?.textContent?.trim()).toBe('Se connecter');
     });
   });
+
+
+
+  
+
 });

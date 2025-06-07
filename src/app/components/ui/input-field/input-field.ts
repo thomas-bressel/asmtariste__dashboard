@@ -1,15 +1,20 @@
-import { Component, signal, input, output, computed,  effect } from '@angular/core';
+import { Component, signal, input, output, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { Selector } from '@services/selector';
 
 
 @Component({
   selector: 'div[app-input-field]',
   imports: [CommonModule],
-  templateUrl: './input-field.html'
+  templateUrl: './input-field.html',
+  host: {
+    '(document:click)': 'onDocumentClick()'
+  }
 })
 export class InputField {
+  private componentId = crypto.randomUUID();
 
+  private selectorService = inject(Selector);
 
   fieldValue = output<string>();
 
@@ -24,15 +29,15 @@ export class InputField {
   maxlength = input('');
 
   // Writable signals
-  isFocused = signal(false);
   isIconActivated = signal(false);
-
+  
   // internal signals used for input change value
   currentType = signal('');
   currentIcon = signal('');
-
+  
   // is label signal is a password field type 
   isPasswordField = computed(() => this.label() === 'password');
+  isFocused = computed(() => this.selectorService.isFocused(this.componentId));
 
 
   constructor() {
@@ -42,31 +47,28 @@ export class InputField {
       this.currentIcon.set(this.icon());
     });
 
-    // debug
-    effect(() => {
-      console.log("icon : ", this.icon())
-      console.log("current icon : ", this.currentIcon())
-      console.log("placeholder : ", this.placeholder())
-      console.log("label : ", this.label())
-      console.log("type : ", this.type())
-      console.log("current type : ", this.currentType())
-      console.log("name : ", this.name())
-      console.log("minlength : ", this.minlength())
-      console.log("maxlength : ", this.maxlength())
-    });
   }
-
-
 
 
   /**
-   * Active 'selected' class when the input field is clicked
-   * @param event 
-   */
+     * Active 'selected' class when the input field is clicked
+     * @param event 
+     */
   onFieldClick(event: MouseEvent) {
     event.stopPropagation();
-    this.isFocused.set(true);
+    this.selectorService.setFocus(this.componentId);
   }
+
+  /**
+  * Manage click outside of the document to unselect
+  * @param event 
+  */
+  onDocumentClick() {
+    if (this.isFocused()) {
+      this.selectorService.clearFocus();
+    }
+  }
+
 
   /**
    * If the input field is a password, change the type and icon when the icon is clicked
@@ -77,7 +79,7 @@ export class InputField {
     if (this.isPasswordField()) {
       const newType = this.currentType() === 'text' ? 'password' : 'text';
       this.currentType.set(newType);
-      
+
       const newIcon = this.currentIcon() === 'eye-on' ? 'eye-off' : 'eye-on';
       this.currentIcon.set(newIcon);
     }
