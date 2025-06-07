@@ -7,12 +7,13 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 
 
 
-
-
 ## [1.2.0] - 2025-06-07
 ### Main
  - Ajout de la structure des routes pour les composants
  - Architecture des dossiers
+ - Ajout d'un champ nickname
+ - Ajout d'un champ password
+ - Ajout d'un bouton de validation du formulaire
 
 ## [1.1.0] - 2025-06-01
 ### Main
