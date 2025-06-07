@@ -1,15 +1,21 @@
+<header class="login__header">
+    <h1 class="login__title">Identifiez-vous ICI</h1>
+    <p class="login__hook">Et commencez à utiliser Drawer en quelques secondes</p>
+</header>
+
+
+<form [formGroup]="authForm()" class="login__form flex-c" (submit)="onSubmit()">
+
+    <div app-input-field [icon]="'user'" [type]="'text'" [name]="'nickname'"
+        [placeholder]="'Entrez votre nom d\'utilisateur'" [label]="'nickname'" [minlength]="'3'" [maxlength]="'25'">
+    </div>
+
+
+</form>
 
 
 
-    <header class="login__header">
-        <h1 class="login__title">Identifiez-vous ICI</h1>
-        <p class="login__hook">Et commencez à utiliser Drawer en quelques secondes</p>
-    </header>
-
-
-
-    <footer class="login__footer">
-        <img class="login__footer-logo" src="./logos/drawer_logo-only-purple.webp" alt="">
-        <p class="login__footer-hook">L'outil de gestion de contenu et plus.</p>
-    </footer>
-
+<footer class="login__footer">
+    <img class="login__footer-logo" src="./logos/drawer_logo-only-purple.webp" alt="">
+    <p class="login__footer-hook">L'outil de gestion de contenu et plus.</p>
+</footer>

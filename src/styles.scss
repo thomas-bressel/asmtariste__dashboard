@@ -1,4 +1,7 @@
 @use "./styles/reset";
+@use "./styles/forms";
 
-@forward "./styles/_fonts";
-@forward "./styles/_colors";
+// @use "./styles/fonts" as *;
+// @use "./styles/colors" as *;
+
+

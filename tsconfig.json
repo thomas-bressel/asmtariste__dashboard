@@ -16,7 +16,7 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-     "@styles/*": ["src/styles/*"],
+     "@services/*": ["src/app/shared/services/*"],
     }
   },
   "angularCompilerOptions": {

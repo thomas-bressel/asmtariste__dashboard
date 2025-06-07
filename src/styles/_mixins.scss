@@ -1,0 +1,24 @@
+
+
+@mixin flex($direction: row, $justify: null, $align: null, $gap: null) {
+    display: flex;
+    @if $direction !=null { flex-direction: $direction;}
+    @if $justify !=null { justify-content: $justify;}
+    @if $align !=null { align-items: $align;}
+    @if $gap !=null { gap: $gap;}
+  }
+  
+  
+  @mixin text($font: null, $size: null, $align: null, $transform: null) {
+    @if $font !=null {font-family: $font;}
+    @if $size !=null {font-size: $size;}
+    @if $align !=null {text-align: $align;}
+    @if $transform !=null {text-transform: $transform;}
+  }
+  
+  
+  @mixin standard-border($size: .25rem, $shape: solid, $radius: 1rem, $color: transparent) {
+    border: $size, $shape, $color;
+    border-radius: $radius;
+  }
+  
