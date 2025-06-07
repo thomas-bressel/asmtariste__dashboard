@@ -14,6 +14,8 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
  - Ajout d'un champ nickname
  - Ajout d'un champ password
  - Ajout d'un bouton de validation du formulaire
+### Fixed
+ - Ajout de test unitaire et de test end 2 end 
 
 ## [1.1.0] - 2025-06-01
 ### Main
