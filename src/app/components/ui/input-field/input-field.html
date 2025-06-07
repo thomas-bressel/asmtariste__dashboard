@@ -9,13 +9,13 @@
     </label>
 
     <img class="input__img" 
-        [src]="'icons/grey/' + icon() + '.svg'" alt="" 
+        [src]="'icons/grey/' + currentIcon() + '.svg'" alt="" 
         (click)="onIconClick($event)">
 
     <input class="input__field" 
         [id]="label()" 
         [name]="name()"  
-        [type]="type()" 
+        [type]="currentType()" 
         [placeholder]="placeholder()" 
         [minLength]="minlength()"
         [maxLength]="maxlength()"

@@ -22,13 +22,57 @@ export class Login {
   // Form state
   authForm = signal<FormGroup>(this.formService.initAuthForm())
 
+  // Field values
+  nicknameValue = signal<string>('');
+  passwordValue = signal<string>('');
+
   constructor() {
+
+    // debug
     effect(() => {
       console.log("authForm() : ", this.authForm())
+      console.log("nicknameValue() : ", this.nicknameValue())
+      console.log("passwordValue() : ", this.passwordValue())
     })
+
+    effect(() => {
+      // Synchronize values with the form groupd
+      this.authForm().get('nickname')?.setValue(this.nicknameValue(), { emitEvent: false });
+      this.authForm().get('password')?.setValue(this.passwordValue(), { emitEvent: false });
+    });
+
   }
 
-  onSubmit() {
 
+  /**
+   * get nickname field values and update signals
+   * @param value 
+   */
+  handleNicknameValueChanged(value: string) {
+    this.nicknameValue.set(value);
+  }
+
+
+
+   /**
+   * get password field values and update signals
+   * @param value 
+   */
+  handlePasswordValueChanged(value: string) {
+    this.passwordValue.set(value);
+  }
+
+
+
+  /**
+   * 
+   */
+  onSubmit() {
+    if (this.authForm().valid) {
+      console.log('Form values:', {
+        nickname: this.nicknameValue(),
+        password: this.passwordValue()
+      });
+    }
   }
 }

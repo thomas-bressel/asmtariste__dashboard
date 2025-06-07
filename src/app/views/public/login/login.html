@@ -7,7 +7,14 @@
 <form [formGroup]="authForm()" class="login__form flex-c" (submit)="onSubmit()">
 
     <div app-input-field [icon]="'user'" [type]="'text'" [name]="'nickname'"
-        [placeholder]="'Entrez votre nom d\'utilisateur'" [label]="'nickname'" [minlength]="'3'" [maxlength]="'25'">
+        [placeholder]="'Entrez votre nom d\'utilisateur'" [label]="'nickname'" [minlength]="'3'" [maxlength]="'25'"
+        (fieldValue)="handleNicknameValueChanged($event)">
+    </div>
+
+
+    <div app-input-field [icon]="'eye-on'" [type]="'password'" [name]="'password'"
+        [placeholder]="'Entrez votre mot de passe'" [label]="'password'" [minlength]="'4'" [maxlength]="'35'"
+        (fieldValue)="handlePasswordValueChanged($event)">
     </div>
 
 

@@ -9,8 +9,9 @@
   }
   
   
-  @mixin text($font: null, $size: null, $align: null, $transform: null) {
+  @mixin text($font: null, $size: null, $align: null, $transform: null, $color: black) {
     @if $font !=null {font-family: $font;}
+    @if $color !=null {color: $color;}
     @if $size !=null {font-size: $size;}
     @if $align !=null {text-align: $align;}
     @if $transform !=null {text-transform: $transform;}
