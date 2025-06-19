@@ -4,18 +4,16 @@ import { authGuard } from './shared/guards/auth-guard';
 
 
 export const routes: Routes = [
-
-        
-        {
-            path: '',
-            loadComponent: async () =>
-                (await import('./views/public/login/login')).Login
-        },
-        {
-            path: 'login',
-            loadComponent: async () =>
-                (await import('./views/public/login/login')).Login
-        },
+    {
+        path: '',
+        loadComponent: async () =>
+            (await import('./views/public/login/login')).Login
+    },
+    {
+        path: 'login',
+        loadComponent: async () =>
+            (await import('./views/public/login/login')).Login
+    },
 
     {
         path: 'folders',
@@ -76,10 +74,10 @@ export const routes: Routes = [
             (await import('./views/private/articles/articles.routes')).routes,
     },
 
-        // Route 404
-        {
-            path: '**',
-            loadComponent: async () =>
-                (await import('./views/shared/not-found/not-found')).NotFound
-        }
+    // Route 404
+    {
+        path: '**',
+        loadComponent: async () =>
+            (await import('./views/shared/not-found/not-found')).NotFound
+    }
 ];
