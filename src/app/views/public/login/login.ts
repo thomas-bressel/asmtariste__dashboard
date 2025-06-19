@@ -70,10 +70,14 @@ export class Login {
    */
   onSubmit() {
     if (this.authForm().valid) {
-      console.log('Form values:', {
-        nickname: this.nicknameValue(),
-        password: this.passwordValue()
-      });
+      // console.log('Form values:', {
+      //   nickname: this.nicknameValue(),
+      //   password: this.passwordValue()
+      // });
+
+      
+
+
     }
   }
 }

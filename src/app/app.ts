@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, inject } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
-import { AuthService } from '@services/auth';
+import { Component, effect, inject, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Auth } from '@services/auth';
+import { Loading } from '@services/loading';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -13,27 +13,20 @@ import { AuthService } from '@services/auth';
 export class App {
 
   // Get the session resource from AuthService
-  readonly authService = inject(AuthService)
+  readonly authService = inject(Auth)
+  readonly loadingService = inject(Loading);
 
-  
+  isLoading = signal(this.loadingService.isLoading);
+
   constructor() {
     effect(() => {
-      const status = this.authService.sessionVerification.status();
+      const status = this.authService.sessionVerification.status(); // error or resolved
       const error = this.authService.sessionVerification.error();
 
-      console.log('status', status);
-      console.log('error :', error);
-      
       if (error instanceof HttpErrorResponse && status === 'error' && error?.error?.code === 'TOKEN_EXPIRED') {
         this.authService.refreshAccessToken();
       }
     });
   }
-    
 
-      
-
-     
-
-  
 }

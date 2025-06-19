@@ -5,7 +5,7 @@ import { httpResource } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class Auth {
   
   public readonly sessionVerification = httpResource<boolean>(() => {
     return {

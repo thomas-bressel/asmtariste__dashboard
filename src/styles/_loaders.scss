@@ -1,0 +1,46 @@
+@use "colors" as color;
+
+.spinner {
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+    border-top: 8px solid color.$greenlight;
+    border-right: 8px solid color.$bluedark;
+    border-bottom: 8px solid color.$reddark;
+    border-left: 8px solid color.$redlight;
+
+    animation: spin 1.5s linear infinite;
+}
+
+
+@keyframes rotateHexagon {
+    0% {
+      transform: rotateY(0deg); 
+      opacity: 1;
+    }
+    50% {
+      transform: rotateY(180deg); 
+      opacity: 0.2;
+    }
+    100% {
+      transform: rotateY(0deg);
+      opacity: 1;
+    }
+  }
+
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
