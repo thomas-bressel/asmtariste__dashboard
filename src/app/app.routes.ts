@@ -14,7 +14,12 @@ export const routes: Routes = [
         loadComponent: async () =>
             (await import('./views/public/login/login')).Login
     },
-
+    {
+        path: 'dashboard',
+        canActivate: [authGuard],
+        loadComponent: async () =>
+            (await import('./views/private/dashboard/dashboard')).Dashboard
+    },
     {
         path: 'folders',
         canActivate: [authGuard],

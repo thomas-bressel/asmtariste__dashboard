@@ -5,9 +5,12 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 // services imports
 import { Form } from '@services/form'
 import { Button } from 'src/app/components/ui/button/button';
+import { Auth } from '@services/auth';
 
 // component imports
 import { InputField } from 'src/app/components/ui/input-field/input-field';
+import { Loading } from '@services/loading';
+import { Router } from '@angular/router';
 @Component({
   selector: 'main[app-login]',
   host: {
@@ -18,7 +21,10 @@ import { InputField } from 'src/app/components/ui/input-field/input-field';
   styleUrl: './login.scss'
 })
 export class Login {
-  private formService = inject(Form)
+  private formService = inject(Form);
+  private authService = inject(Auth);
+  private loadingService = inject(Loading);
+  private router = inject(Router);
 
   // Form state
   authForm = signal<FormGroup>(this.formService.initAuthForm())
@@ -28,14 +34,6 @@ export class Login {
   passwordValue = signal<string>('');
 
   constructor() {
-
-    // debug
-    effect(() => {
-      console.log("authForm() : ", this.authForm())
-      console.log("nicknameValue() : ", this.nicknameValue())
-      console.log("passwordValue() : ", this.passwordValue())
-    })
-
     effect(() => {
       // Synchronize values with the form groupd
       this.authForm().get('nickname')?.setValue(this.nicknameValue(), { emitEvent: false });
@@ -55,10 +53,10 @@ export class Login {
 
 
 
-   /**
-   * get password field values and update signals
-   * @param value 
-   */
+  /**
+  * get password field values and update signals
+  * @param value 
+  */
   handlePasswordValueChanged(value: string) {
     this.passwordValue.set(value);
   }
@@ -66,18 +64,36 @@ export class Login {
 
 
   /**
-   * 
+   * Submit form data to the api
    */
-  onSubmit() {
+  async onSubmit() {
     if (this.authForm().valid) {
-      // console.log('Form values:', {
-      //   nickname: this.nicknameValue(),
-      //   password: this.passwordValue()
-      // });
+      this.loadingService.show();
+      const { nickname, password } = this.authForm().value;
 
-      
+      // FormData encoding params
+      const formData = new URLSearchParams();
+      formData.append('nickname', nickname);
+      formData.append('password', password);
+      try {
+        const response = await this.authService.createSession(formData);
+        const data = await response.json();
 
+        if (!response.ok) {
+          alert(data.code)
+          this.loadingService.hide();
+          return;
+        }
 
+        this.authService.setTokens(data.sessionToken, data.refreshToken);
+        // this.loadingService.hide();
+        this.router.navigate(['dashboard'])
+       
+
+      } catch (error) {
+        this.loadingService.hide();
+        console.error('Login error:', error);
+      }
     }
   }
 }
