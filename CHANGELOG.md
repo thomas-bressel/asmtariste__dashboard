@@ -1,31 +1,34 @@
 # CHANGELOG
 
-Toutes les modifications notables apportées à ce projet seront documentées dans ce fichier.
+All notable changes to this project will be documented in this file.
 
-Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-
-
+## [1.3.0] - 2025-06-19
+### Main
+- Added an authentication service  
+- Added a method to check if the user's session is active  
+- Added a method to update the access token if the session is no longer active  
 
 ## [1.2.0] - 2025-06-07
 ### Main
- - Ajout de la structure des routes pour les composants
- - Architecture des dossiers
- - Ajout d'un champ nickname
- - Ajout d'un champ password
- - Ajout d'un bouton de validation du formulaire
+- Added route structure for components  
+- Set up folder architecture  
+- Added a `nickname` field  
+- Added a `password` field  
+- Added a form validation button  
+
 ### Fixed
- - Ajout de test unitaire et de test end 2 end 
+- Added unit tests and end-to-end tests  
 
 ## [1.1.0] - 2025-06-01
 ### Main
- - Ajout du runner de build dans la pipeline CI pour github Actions.
- - Deploiment automatique sur le serveur de pre-production.
-
+- Added build runner to the CI pipeline for GitHub Actions  
+- Automatic deployment to the pre-production server  
 
 ## [1.0.0] - 2025-06-01
 ### Main
-- Mise en place du projet Angular 20, zone-less, SASS.
-- Mise en place du Dockerfile et du docker-compose pour le développement.
-- Mise en place de la configuration git.
-- Mise en place du runner de test unitaire dans la pipeline CI pour github Actions.
+- Set up Angular 20 project (zone-less, with SASS)  
+- Set up Dockerfile and docker-compose for development  
+- Set up Git configuration  
+- Set up unit test runner in the CI pipeline for GitHub Actions
