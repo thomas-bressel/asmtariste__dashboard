@@ -7,7 +7,7 @@ export class Loading {
   public readonly isLoading = signal(false);
   
   show(): void {
-    this.isLoading.set(true);
+      this.isLoading.set(true);
   }
   
   hide(): void {

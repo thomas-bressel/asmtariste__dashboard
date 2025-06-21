@@ -6,11 +6,12 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Form } from '@services/form'
 import { Button } from 'src/app/components/ui/button/button';
 import { Auth } from '@services/auth';
+import { Notification } from '@services/notification';
+import { Loading } from '@services/loading';
+import { Router } from '@angular/router';
 
 // component imports
 import { InputField } from 'src/app/components/ui/input-field/input-field';
-import { Loading } from '@services/loading';
-import { Router } from '@angular/router';
 @Component({
   selector: 'main[app-login]',
   host: {
@@ -25,6 +26,7 @@ export class Login {
   private authService = inject(Auth);
   private loadingService = inject(Loading);
   private router = inject(Router);
+  private notificationService = inject(Notification);
 
   // Form state
   authForm = signal<FormGroup>(this.formService.initAuthForm())
@@ -67,6 +69,7 @@ export class Login {
    * Submit form data to the api
    */
   async onSubmit() {
+
     if (this.authForm().valid) {
       this.loadingService.show();
       const { nickname, password } = this.authForm().value;
@@ -80,15 +83,14 @@ export class Login {
         const data = await response.json();
 
         if (!response.ok) {
-          alert(data.code)
+          this.notificationService.configNotification('red');
+          this.notificationService.displayNotification(data.message || 'Erreur de connexion', 3000, null, 'server', false);
           this.loadingService.hide();
           return;
         }
-
-        this.authService.setTokens(data.sessionToken, data.refreshToken);
-        // this.loadingService.hide();
-        this.router.navigate(['dashboard'])
-       
+        this.notificationService.configNotification('green');
+        this.notificationService.displayNotification("LOGIN_SUCCESS", 2000, 'dashboard', 'client', false);
+        this.authService.setTokens(data.sessionToken, data.refreshToken);      
 
       } catch (error) {
         this.loadingService.hide();

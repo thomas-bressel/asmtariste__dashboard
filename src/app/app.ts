@@ -1,12 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal, input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Auth } from '@services/auth';
 import { Loading } from '@services/loading';
-
+import { Notification  as NotificationComponent } from './components/overlays/notification/notification';
+import { Notification as NotificationService} from '@services/notification';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NotificationComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -14,6 +15,8 @@ export class App {
 
   readonly authService = inject(Auth)
   readonly loadingService = inject(Loading);
+  readonly notificationService = inject(NotificationService)
+
 
   // For template
   isLoading = this.loadingService.isLoading;
@@ -28,7 +31,10 @@ export class App {
       if (error instanceof HttpErrorResponse && status === 'error' && error?.error?.code === 'TOKEN_EXPIRED') {
         this.authService.refreshAccessToken();
       }
+      
+      
     });
   }
+  
 
 }
