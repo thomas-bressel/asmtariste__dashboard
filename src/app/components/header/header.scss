@@ -1,12 +1,8 @@
-:host {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
+@use 'mixins' as *;
 
-    display: flex;
-    align-items: center;
-    gap: .5rem;
+:host {
+    @include flex($align: center, $justify: space-between, $gap: .5rem);
+    @include position($position: fixed, $top: 0, $left: 0, $zindex: 100);
 
     width: 100%;
     padding: 1rem;

@@ -1,7 +1,10 @@
+<!-- Logo Drawer in top left -->
 <div app-button class="header__logo" [img]="'drawer_logo-black'" [bgColor]="'white'" [borderColor]="'greylight'"></div>
 
+<!-- Burger botton on mobile -->
 <div app-button class="header__burger" [class.hidden]="isNavigationOverlay()" [icon]="'burger.svg'"
     [iconColor]="'black'" [borderColor]="'greylight'" (click)="handleNavigationOverlay()"></div>
-
+    
+<!-- Cross button when clicked on burger button -->
 <div app-button class="header__burger cross hidden" [class.hidden]="!isNavigationOverlay()" [icon]="'cross.svg'"
     [iconColor]="'black'" [borderColor]="'greylight'" (click)="handleNavigationOverlay()"></div>

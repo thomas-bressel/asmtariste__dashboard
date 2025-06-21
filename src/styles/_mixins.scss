@@ -22,4 +22,14 @@
     border: $size, $shape, $color;
     border-radius: $radius;
   }
+
+  @mixin position($position: null, $top: null, $right: null, $bottom: null, $left: null, $zindex: null) {
+    @if $position !=null {position: $position}
+    @if $top !=null {top: $top;}
+    @if $right !=null {right: $right;}
+    @if $bottom !=null {bottom: $bottom;}
+    @if $left !=null {left: $left;}
+    @if $zindex !=null {z-index: $zindex;}
+  }
+
   
