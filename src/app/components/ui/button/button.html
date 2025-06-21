@@ -3,7 +3,7 @@
     [type]="type() === 'submit' ? 'submit' : 'button'"(click)="handleClick()">
 
 @if(icon()) {
-    <img class="btn__icn" [src]="`./svg/${iconColor()}/${icon()}`" alt="">
+    <img class="btn__icn" [src]="`./icons/${iconColor()}/${icon()}`" alt="">
 }
 @if(img()) {
     <img class="btn__img" [src]="`./logos/${img()}.webp`" alt="">

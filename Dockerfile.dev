@@ -1,9 +1,19 @@
 FROM node:22-alpine
 
 WORKDIR /app
+
+# Installer Angular CLI globalement
 RUN npm install -g @angular/cli
+
+# Copier les fichiers de configuration des dépendances
 COPY package*.json ./
+
+# Installer les dépendances
 RUN npm install
-COPY . .
+
+# Exposer le port
 EXPOSE 4200
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+
+# Configuration pour le hot reload avec polling
+# et permettre l'accès depuis l'extérieur du container
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]

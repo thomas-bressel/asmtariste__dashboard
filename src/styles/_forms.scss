@@ -36,7 +36,10 @@ textarea::placeholder {
 }
 
 
-
+/* Hide buttons or field or anything else */
+.hidden {
+  display: none !important;
+}
 
 
 .btn {
