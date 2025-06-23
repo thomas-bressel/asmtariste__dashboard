@@ -8,7 +8,6 @@ import { Button } from 'src/app/components/ui/button/button';
 import { Auth } from '@services/auth';
 import { Notification } from '@services/notification';
 import { Loading } from '@services/loading';
-import { Router } from '@angular/router';
 
 // component imports
 import { InputField } from 'src/app/components/ui/input-field/input-field';
@@ -25,7 +24,6 @@ export class Login {
   private formService = inject(Form);
   private authService = inject(Auth);
   private loadingService = inject(Loading);
-  private router = inject(Router);
   private notificationService = inject(Notification);
 
   // Form state

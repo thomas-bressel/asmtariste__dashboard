@@ -85,6 +85,10 @@ export class Auth {
    localStorage.setItem('refreshToken', refreshToken);
  }
 
+
+ /**
+  * Clear tokens when logout user
+  */
  public clearTokens(): void {
    localStorage.removeItem('accessToken');
    localStorage.removeItem('refreshToken');

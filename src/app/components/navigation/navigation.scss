@@ -1,0 +1,78 @@
+@use 'colors.scss' as colors;
+@use '_fonts.scss' as fonts;
+
+:host {
+    margin-top: 5rem;
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+
+    // Sur mobile, masquer quand la classe est appliquée
+    &.hidden-navigation {
+        display: none;
+    }
+}
+
+.navigation {
+    &__list {
+        display: flex;
+        flex-direction: column;
+
+        position: fixed;
+        z-index: 200;
+        top: 80px;
+        left: 0;
+
+        width: 100vw;
+        height: 100vh;
+
+        padding: 1rem;
+        gap: 1rem;
+        background-color: colors.$white;
+    }
+
+    &__item {
+        &-link {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+            gap: .5rem;
+            text-transform: capitalize;
+            font-family: fonts.$JakartaLight;
+            font-size: 1rem;
+            color: colors.$purpleblue !important;
+        }
+
+        &-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    :host {
+        // Sur desktop, toujours afficher la navigation
+        display: block !important;
+        
+        &.hidden-navigation {
+            display: block !important;
+        }
+    }
+
+    .navigation {
+        &__list {
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            height: auto;
+            width: 100%;
+        }
+    }
+}

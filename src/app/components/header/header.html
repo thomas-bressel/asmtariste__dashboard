@@ -1,10 +1,16 @@
 <!-- Logo Drawer in top left -->
 <div app-button class="header__logo" [img]="'drawer_logo-black'" [bgColor]="'white'" [borderColor]="'greylight'"></div>
 
-<!-- Burger botton on mobile -->
+<!-- Burger button on mobile -->
 <div app-button class="header__burger" [class.hidden]="isNavigationOverlay()" [icon]="'burger.svg'"
     [iconColor]="'black'" [borderColor]="'greylight'" (click)="handleNavigationOverlay()"></div>
-    
+
 <!-- Cross button when clicked on burger button -->
 <div app-button class="header__burger cross hidden" [class.hidden]="!isNavigationOverlay()" [icon]="'cross.svg'"
     [iconColor]="'black'" [borderColor]="'greylight'" (click)="handleNavigationOverlay()"></div>
+
+<!-- Navigation overlay in mobile or static menu in desktop view-->
+<!-- Logique inversée : masquer quand isNavigationOverlay() est false -->
+<nav [class.hidden-navigation]="!isNavigationOverlay()" app-navigation 
+     [interfaceForNavigationComponent]="interfaceNavigation()" 
+     (isNavigationOverlay)="handleNavigationOverlay()"></nav>
