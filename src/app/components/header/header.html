@@ -10,7 +10,6 @@
     [iconColor]="'black'" [borderColor]="'greylight'" (click)="handleNavigationOverlay()"></div>
 
 <!-- Navigation overlay in mobile or static menu in desktop view-->
-<!-- Logique inversée : masquer quand isNavigationOverlay() est false -->
 <nav [class.hidden-navigation]="!isNavigationOverlay()" app-navigation 
      [interfaceForNavigationComponent]="interfaceNavigation()" 
      (isNavigationOverlay)="handleNavigationOverlay()"></nav>

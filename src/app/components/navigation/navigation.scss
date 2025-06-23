@@ -12,7 +12,7 @@
     border-top-left-radius: 10px;
     box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
 
-    // Sur mobile, masquer quand la classe est appliquée
+    
     &.hidden-navigation {
         display: none;
     }
@@ -58,7 +58,7 @@
 
 @media screen and (min-width: 768px) {
     :host {
-        // Sur desktop, toujours afficher la navigation
+        
         display: block !important;
         
         &.hidden-navigation {
