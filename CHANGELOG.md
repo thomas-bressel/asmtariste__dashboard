@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.5.0] - 2025-06-23
+### Main
+ - Added navigation menu interface depending on permission user
+
 ## [1.4.0] - 2025-06-21
 ### Main
  - Added a notification service
