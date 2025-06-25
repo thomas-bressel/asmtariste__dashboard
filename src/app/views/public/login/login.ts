@@ -39,7 +39,8 @@ export class Login {
       this.authForm().get('nickname')?.setValue(this.nicknameValue(), { emitEvent: false });
       this.authForm().get('password')?.setValue(this.passwordValue(), { emitEvent: false });
     });
-
+    
+    this.loadingService.isLoading.set(false);
   }
 
 

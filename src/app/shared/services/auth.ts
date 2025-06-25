@@ -19,7 +19,7 @@ export class Auth {
  });
 
  /**
-  * Vérifie la session via fetch (pour le guard)
+  * Check the session by fetch (guard)
   * @returns Promise<Response>
   */
  public async verifySession(): Promise<Response> {
@@ -37,6 +37,8 @@ export class Auth {
    });
  }
 
+
+
  /**
   * Send credential to the API to create a new session
   * @param formData 
@@ -49,6 +51,8 @@ export class Auth {
      body: formData
    });
  }
+
+
 
  /**
   * Refresh the access token if the access token is not valid
@@ -75,6 +79,31 @@ export class Auth {
      return null;
    }
  }
+
+
+
+/**
+ * Delete session and back to the login page
+ * @returns 
+ */
+ public async deleteSession(): Promise<Response> {
+  const token = this.getAccessToken();
+  
+  if (!token) {
+    throw new Error('No token available');
+  }
+
+  this.clearTokens();
+  
+  return await fetch(`${USER_API_URI}/user/v1/admin/logout`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
+
+
 
  /**
   * Update access token and refresh token 

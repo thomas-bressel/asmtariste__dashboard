@@ -1,13 +1,18 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { Loading } from './loading';
+import { Auth } from './auth';
 @Injectable({
   providedIn: 'root'
 })
 export class Notification {
-  router = inject(Router)
+  router = inject(Router);
+  loadingService = inject(Loading);
+  authService = inject(Auth);
 
   readonly notificationMessages: Record<string, string> = {
     'LOGIN_SUCCESS': 'Connexion réussie',
+    'IS_LOGOUT' : 'Vous êtes sur le point de fermer votre session',
     'logout-success': 'Déconnexion réussie',
     'session-invalid': 'Votre session est invalide, veuillez vous reconnecter'
   }
@@ -17,6 +22,7 @@ export class Notification {
   public notificationMessage = signal('');
   public isChoiceButtons = signal(false);
   public backgroundColor = signal('');
+  public actionOnConfirm = signal('');
 
 
 
@@ -25,8 +31,9 @@ export class Notification {
   /**
  * Configure notification background color
  */
-  public configNotification(bgColor: string = 'green'): void {
+  public configNotification(bgColor: string = 'green', action?: string): void {
     this.backgroundColor.set(bgColor);
+    action ? this.actionOnConfirm.set(action) : null;
   }
 
   /**
@@ -81,5 +88,22 @@ export class Notification {
   public hide(): void {
     this.isNotificationWindow.set(false);
   }
+
+
+  public action(): void {
+    const action = this.actionOnConfirm();
+    this.hide();
+    this.loadingService.isLoading.set(true)
+    switch (action) {
+      case 'logout':
+        this.authService.deleteSession();
+        this.router.navigate(['/login'])
+        break;
+  
+      default:
+        console.warn(`Unhandled action: ${action}`);
+    }
+  }
+  
 
 }
