@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { httpResource } from '@angular/common/http';
 import { NavigationReponse } from '../models/interface.models';
 import { Auth } from './auth';
-
+import { USER_API_URI } from '../config';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +12,7 @@ export class Interface {
 
   public readonly getMainNavigation = httpResource<NavigationReponse>(() => {
     return {
-      url: 'http://localhost:5002/user/v1/admin/interface?type=navigation',
+      url: `${USER_API_URI}/user/v1/admin/interface?type=navigation`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${this.serviceAuth.getAccessToken()}`

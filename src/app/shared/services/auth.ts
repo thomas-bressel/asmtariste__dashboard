@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { httpResource } from '@angular/common/http';
-
+import { USER_API_URI } from '../config';
 
 @Injectable({
  providedIn: 'root'
 })
 export class Auth {
 
+
  public readonly sessionVerification = httpResource<boolean>(() => {
    return {
-     url: 'http://localhost:5002/user/v1/admin/verify',
+     url: `${USER_API_URI}/user/v1/admin/verify`,
      method: 'GET',
      headers: {
        Authorization: `Bearer ${this.getAccessToken()}`
@@ -28,7 +29,7 @@ export class Auth {
      throw new Error('No token available');
    }
    
-   return await fetch('http://localhost:5002/user/v1/admin/verify', {
+   return await fetch(`${USER_API_URI}/user/v1/admin/verify`, {
      method: 'GET',
      headers: {
        Authorization: `Bearer ${token}`
@@ -42,7 +43,7 @@ export class Auth {
   * @returns 
   */
  public async createSession(formData: URLSearchParams): Promise<Response> {
-   return await fetch('http://localhost:5002/user/v1/admin/login', {
+   return await fetch(`${USER_API_URI}/user/v1/admin/login`, {
      method: 'POST',
      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
      body: formData
@@ -57,7 +58,7 @@ export class Auth {
    if (!this.getRefreshToken()) return null;
 
    try {
-     const response = await fetch('http://localhost:5002/user/v1/admin/refresh', {
+     const response = await fetch(`${USER_API_URI}/user/v1/admin/refresh`, {
        method: 'POST',
        headers: {
          'Authorization': `Bearer ${this.getRefreshToken()}`
