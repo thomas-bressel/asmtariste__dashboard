@@ -1,0 +1,450 @@
+/***
+    The new CSS reset - version 1.11.3 (last updated 25.08.2024)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+***/
+/*
+    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    - The "symbol *" part is to solve Firefox SVG sprite bug
+    - The "html" element is excluded, otherwise a bug in Chrome breaks the CSS hyphens property (https://github.com/elad2412/the-new-css-reset/issues/36)
+ */
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+  all: unset;
+  display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Fix mobile Safari increase font-size on landscape mode */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Reapply the pointer cursor for anchor tags */
+a, button {
+  cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol, ul, menu, summary {
+  list-style: none;
+}
+
+/* Firefox: solve issue where nested ordered lists continue numbering from parent (https://bugzilla.mozilla.org/show_bug.cgi?id=1881517) */
+ol {
+  counter-reset: revert;
+}
+
+/* For images to not be able to exceed their container */
+img {
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+  border-collapse: collapse;
+}
+
+/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+input, textarea {
+  -webkit-user-select: auto;
+     -moz-user-select: auto;
+          user-select: auto;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+  white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+  -webkit-appearance: revert;
+  -moz-appearance: revert;
+       appearance: revert;
+}
+
+/* preformatted text - use only for this feature */
+:where(pre) {
+  all: revert;
+  box-sizing: border-box;
+}
+
+/* reset default text opacity of input placeholder */
+::-moz-placeholder {
+  color: unset;
+}
+::placeholder {
+  color: unset;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+  display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly.
+   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
+:where([contenteditable]:not([contenteditable=false])) {
+  -moz-user-modify: read-write;
+  -webkit-user-modify: read-write;
+  overflow-wrap: break-word;
+  line-break: after-white-space;
+  -webkit-user-select: auto;
+     -moz-user-select: auto;
+          user-select: auto;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable=true]) {
+  -webkit-user-drag: element;
+}
+
+/* Revert Modal native behavior */
+:where(dialog:modal) {
+  all: revert;
+  box-sizing: border-box;
+}
+
+/* Remove details summary webkit styles */
+::-webkit-details-marker {
+  display: none;
+}
+
+@font-face {
+  font-family: "Jakarta ExtraLight";
+  src: url("/fonts/PlusJakartaSans-ExtraLight.woff2") format("woff2");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Jakarta Light";
+  src: url("/fonts/PlusJakartaSans-Light.woff2") format("woff2");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Jakarta Regular";
+  src: url("/fonts/PlusJakartaSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Jakarta Medium";
+  src: url("/fonts/PlusJakartaSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Jakarta Bold";
+  src: url("/fonts/PlusJakartaSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Jakarta ExtraBold";
+  src: url("/fonts/PlusJakartaSans-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+}
+.color-greylight {
+  color: #A8B3CF !important;
+}
+
+.color-red {
+  color: red !important;
+}
+
+.color-blue {
+  color: blue !important;
+}
+
+.color-green {
+  color: green !important;
+}
+
+.color-yellow {
+  color: yellow !important;
+}
+
+.color-orange {
+  color: orange !important;
+}
+
+.color-purple {
+  color: purple !important;
+}
+
+.color-black {
+  color: black !important;
+}
+
+.color-white {
+  color: white !important;
+}
+
+.color-brown {
+  color: #A86954 !important;
+}
+
+.background-red {
+  background-color: red !important;
+}
+
+.background-redlight {
+  background-color: rgb(255, 230, 230) !important;
+}
+
+.background-blue {
+  background-color: blue !important;
+}
+
+.background-green {
+  background-color: green !important;
+}
+
+.background-greenlight {
+  background-color: rgb(226, 255, 226) !important;
+}
+
+.background-yellow {
+  background-color: yellow !important;
+}
+
+.background-yellowlight {
+  background-color: rgb(255, 255, 225) !important;
+}
+
+.background-orange {
+  background-color: orange !important;
+}
+
+.background-purple {
+  background-color: purple !important;
+}
+
+.background-black {
+  background-color: black !important;
+}
+
+.background-white {
+  background-color: white !important;
+}
+
+.background-grey {
+  background-color: grey !important;
+}
+
+.shadow-red {
+  box-shadow: 0 3px 10px rgba(255, 0, 0, 0.5) !important;
+}
+
+.shadow-blue {
+  box-shadow: 0 3px 10px rgba(0, 0, 255, 0.5) !important;
+}
+
+.shadow-green {
+  box-shadow: 0 3px 10px rgba(0, 128, 0, 0.5) !important;
+}
+
+.shadow-yellow {
+  box-shadow: 0 3px 10px rgba(255, 255, 0, 0.5) !important;
+}
+
+.shadow-orange {
+  box-shadow: 0 3px 10px rgba(255, 165, 0, 0.5) !important;
+}
+
+.shadow-purple {
+  box-shadow: 0 3px 10px rgba(128, 0, 128, 0.5) !important;
+}
+
+.shadow-black {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.shadow-white {
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5) !important;
+}
+
+.shadow-grey {
+  box-shadow: 0 3px 10px rgba(128, 128, 128, 0.5) !important;
+}
+
+.shadow-greylight {
+  box-shadow: 0 3px 10px rgba(168, 179, 207, 0.5) !important;
+}
+
+.border-red {
+  border-color: red !important;
+}
+
+.border-blue {
+  border-color: blue !important;
+}
+
+.border-green {
+  border-color: green !important;
+}
+
+.border-yellow {
+  border-color: yellow !important;
+}
+
+.border-orange {
+  border-color: orange !important;
+}
+
+.border-purple {
+  border-color: purple !important;
+}
+
+.border-black {
+  border-color: black !important;
+}
+
+.border-white {
+  border-color: white !important;
+}
+
+.border-grey {
+  border-color: grey !important;
+}
+
+.border-greylight {
+  border-color: #A8B3CF !important;
+}
+
+/* Native elements */
+input,
+textarea {
+  width: 100%;
+}
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #A8B3CF;
+  font-size: 1rem;
+  width: 100%;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #A8B3CF;
+  font-size: 1rem;
+  width: 100%;
+}
+
+/* global classes */
+.input {
+  border: 2px, solid, #A8B3CF;
+  border-radius: 0.5rem;
+  display: flex;
+}
+.input__icn {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* Input filed border color change */
+.selected {
+  border: 2px, solid, #000000;
+  border-radius: 0.5rem;
+}
+
+/* Hide buttons or field or anything else */
+.hidden {
+  display: none !important;
+}
+
+.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 2px, solid, transparent;
+  border-radius: 0.9rem;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+  height: 48px;
+  white-space: nowrap;
+}
+.btn__img, .btn__icn {
+  height: 3rem;
+}
+
+.error {
+  color: #E04337;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border-top: 8px solid #39E58C;
+  border-right: 8px solid #0E4046;
+  border-bottom: 8px solid #512B30;
+  border-left: 8px solid #E04337;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes rotateHexagon {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotateY(180deg);
+    opacity: 0.2;
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1500;
+  background-color: #042b00;
+  opacity: 0.7;
+  width: 100%;
+  height: 100%;
+}
+
+/* Globar Styles*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Jakarta Regular";
+}
+
+body {
+  padding: 2rem;
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 16px;
+}
+
+.hidden {
+  display: none !important;
+}/*# sourceMappingURL=styles.css.map */

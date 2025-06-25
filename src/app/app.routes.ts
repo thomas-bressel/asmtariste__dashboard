@@ -19,7 +19,7 @@ export const routes: Routes = [
         path: 'dashboard',
         canActivate: [authGuard],
         loadComponent: async () =>
-            (await import('./views/private/dashboard/dashboard')).Dashboard, // Votre composant layout
+            (await import('./views/private/dashboard/dashboard')).Dashboard,
         children: [
             {
                 path: 'folders',

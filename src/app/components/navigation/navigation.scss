@@ -2,17 +2,7 @@
 @use '_fonts.scss' as fonts;
 
 :host {
-    margin-top: 5rem;
-    position: fixed;
-    z-index: 100;
-    bottom: 0;
-    width: 100%;
-    padding: 1rem;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
-
-    
+    display: contents;   
     &.hidden-navigation {
         display: none;
     }
