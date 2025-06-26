@@ -5,7 +5,9 @@ import { InputField } from 'src/app/components/ui/input-field/input-field';
 import { Button } from 'src/app/components/ui/button/button';
 import { SelectField } from 'src/app/components/ui/select-field/select-field';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { Loading } from '@services/loading';
+import { Tag } from '@services/tag';
+import { Notification } from '@services/notification';
 @Component({
   selector: 'section[app-create-tag]',
   imports: [ReactiveFormsModule, InputField, Button, SelectField],
@@ -21,6 +23,9 @@ export class CreateTag {
   private formService = inject(Form);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private loadingService = inject(Loading);
+  private tagService = inject(Tag);
+  private notificationService = inject(Notification);
 
 
   // Fields Velues
@@ -69,7 +74,7 @@ export class CreateTag {
    */
   handleSelectBoxValueChanged(value: string, type: string) {
     console.log('Option value changed:', value);
-    
+
     if (type === 'textColor') {
       this.colorValue.set(value);
     } else if (type === 'backgroundColor') {
@@ -78,16 +83,54 @@ export class CreateTag {
       this.borderValue.set(value);
     }
   }
-  
 
 
- async onSubmit() {
-    console.log(this.labelValue())
+
+  async onSubmit() {
+
+    if (this.createTagForm().valid) {
+
+      this.loadingService.show();
+      const { label, color, background_color, border_color } = this.createTagForm().value;
+
+      // FormData encording params
+      const formData = new URLSearchParams();
+      formData.append('label', label);
+      formData.append('color', color);
+      formData.append('background_color', background_color);
+      formData.append('border_color', border_color);
+
+      try {
+        const response = await this.tagService.createTag(formData);
+        const data = await response.json();
+
+        if (!response.ok) {
+          this.notificationService.configNotification('red');
+          this.notificationService.displayNotification(data.message || 'Erreur de connexion', 3000, null, 'server', false);
+          this.loadingService.hide();
+          return;
+        }
+
+        this.notificationService.configNotification('green');
+        this.notificationService.displayNotification("TAG_CREATE_SUCCESS", 2000, 'dashboard', 'client', false);
+
+      } catch (error) {
+        this.loadingService.hide();
+      }
+
+
+
+    }
+
   }
 
-  onCancel() {
-    this.createTagForm().reset();
-    this.router.navigate(['./create'], { relativeTo: this.route });
-  }
 
-}
+    /**
+     * Cancel the form and back to its parent route
+     */
+    onCancel() {
+      this.createTagForm().reset();
+      this.router.navigate(['../'], { relativeTo: this.route });
+    }
+
+  }

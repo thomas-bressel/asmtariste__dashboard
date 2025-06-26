@@ -24,5 +24,21 @@ export class Tag {
     };
   });
 
+
+
   constructor() { }
+
+
+  /**
+    * Create a tag
+    */
+  public async createTag(formData: URLSearchParams): Promise<Response> {
+    return await fetch(`${CONTENT_API_URI}/content/v1/tag/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData
+    });
+  }
+
+
 }

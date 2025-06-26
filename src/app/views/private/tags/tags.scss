@@ -1,6 +1,7 @@
 @use 'navigation.scss';
 @use 'colors.scss' as color;
 @use 'mixins.scss' as *;
+@use 'animations' as anim;
 
 
 .selected {
@@ -19,7 +20,7 @@
 
     &__item {
         @include standard-border($size: 4px, $shape: solid, $color: transparent, $radius: 15px);
-        transition: 100ms ease-in-out;
+        transition: anim.$tag-hover ease-in-out;
         width: fit-content;
 
         &-color {
@@ -42,8 +43,8 @@
 
         &__item:hover {
             cursor: pointer;
-            transform: scale(1.2);
-            transition: 100ms ease-in-out;
+            transform: scale(anim.$tag-scale);
+            transition: anim.$tag-hover ease-in-out;
         
         }
     }

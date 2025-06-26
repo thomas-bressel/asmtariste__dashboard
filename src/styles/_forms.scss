@@ -1,10 +1,11 @@
 @use "fonts" as font;
 @use "colors" as color;
+@use 'animations' as anim;
 @use "mixins" as *;
 
 
 
-/* Native elements */ 
+/* Native elements */
 input,
 textarea {
   width: 100%;
@@ -12,7 +13,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-@include text($size: 1rem, $color: color.$greylight);
+  @include text($size: 1rem, $color: color.$greylight);
   width: 100%;
 }
 
@@ -45,8 +46,9 @@ textarea::placeholder {
 .btn {
   @include flex($justify: center, $align: center);
   @include standard-border($radius: .9rem, $size: 2px);
-  // @include text($font: font.$JakartaBold, $size: .8rem);
+  @include text($font: font.$JakartaBold, $size: 1.3rem);
 
+  transition: anim.$btn-hover ease-in-out;
   padding: .5rem .5rem;
   width: 100%;
   height: 48px;
@@ -56,6 +58,15 @@ textarea::placeholder {
   &__img,
   &__icn {
     height: 3rem;
+  }
+
+}
+
+@media screen and (min-width: 758px) {
+  .btn:hover {
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgb(55, 64, 85) !important;
+    transition: anim.$btn-hover ease-in-out;
   }
 
 }
