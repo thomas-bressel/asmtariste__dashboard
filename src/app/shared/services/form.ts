@@ -12,6 +12,8 @@ export class Form {
   fb = inject(FormBuilder)
 
 
+
+
   /**
    * Init the login form to register user access
    * @returns 
@@ -22,6 +24,18 @@ export class Form {
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(35)]]
     })
   }
+
+
+
+  initCreateTagForm(): FormGroup {
+    return this.fb.group({
+      label: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
+      color: [''],
+      background_color: [''],
+      border_color: [''],
+    });
+  }
+
 
 
 }

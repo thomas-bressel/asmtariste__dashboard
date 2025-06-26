@@ -49,7 +49,9 @@ export const routes: Routes = [
             {
                 path: 'tags',
                 loadComponent: async () =>
-                    (await import('./views/private/tags/tags')).Tags
+                    (await import('./views/private/tags/tags')).Tags,
+                loadChildren: async () =>
+                    (await import('./views/private/tags/tags.routes')).routes,
             },
             {
                 path: 'stats',
