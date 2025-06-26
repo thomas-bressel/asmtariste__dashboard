@@ -1,6 +1,6 @@
 import { Component, signal, inject, output, effect } from '@angular/core';
 import { Button } from '../ui/button/button';
-import { NavigationReponse } from 'src/app/shared/models/interface.models';
+import { InterfaceNavigationReponse } from 'src/app/shared/models/interface.models';
 import { Navigation } from '../navigation/navigation';
 import { Interface } from '@services/interface';
 import { Notification } from '@services/notification';
@@ -16,18 +16,18 @@ import { Notification } from '@services/notification';
 })
 export class Header {
   // services injection
-  serviceInterface = inject(Interface);
-  serviceNotification = inject(Notification);
+  interfaceService = inject(Interface);
+  notificationService = inject(Notification);
 
   // Transmit interface data to its parents
-  interfaceForNavigationComponent = output<NavigationReponse>();
+  interfaceForNavigationComponent = output<InterfaceNavigationReponse>();
 
   isNavigationOverlay = signal<boolean>(false);
-  interfaceNavigation = signal<NavigationReponse | undefined>(undefined); // async data from Interface service
+  interfaceNavigation = signal<InterfaceNavigationReponse | undefined>({}); // async data from Interface service
 
   constructor() {
     effect(() => {
-      const navigationResource = this.serviceInterface.getMainNavigation;
+      const navigationResource = this.interfaceService.getMainNavigation;
 
       // Check if value exists 
       if (navigationResource.value()) {
@@ -38,7 +38,7 @@ export class Header {
 
       // Check if errors exist
       if (navigationResource.error()) {
-        this.interfaceNavigation.set(undefined);
+        this.interfaceNavigation.set({});
       }
     });
   }
@@ -47,16 +47,16 @@ export class Header {
   /**
    * Method to toggle the menu overlay
    */
-  handleNavigationOverlay() {
+  public handleNavigationOverlay(): void {
     this.isNavigationOverlay.set(!this.isNavigationOverlay());
   }
 
   /**
    * Method to configure the action of the notification
    */
-  handleLogout() {
-    this.serviceNotification.configNotification('red', 'logout');
-    this.serviceNotification.displayNotification('IS_LOGOUT', 0, '/login', 'client', true);
+  public handleLogout(): void {
+    this.notificationService.configNotification('red', 'logout');
+    this.notificationService.displayNotification('IS_LOGOUT', 0, '/login', 'client', true);
   }
 
 }

@@ -1,1 +1,19 @@
-<p>tags works!</p>
+@if(interfaceTag()) {
+<nav id="tag-nav" class="navigation background-white">
+    <ul class="navigation__list">
+
+        @for (tagGroup of interfaceTag() | keyvalue ; track tagGroup.key ) {
+            @for (tagAction of tagGroup.value | keyvalue; track tagAction.key) {
+            <li [id]="tagAction.value.action" class="nav-item-js navigation__item navigation__action background-white"
+                [ngClass]="{'active': tagAction.value.state || selectedIdItem}"
+                (click)="selectBtn(tagAction.value.action, $event)">
+
+                <div app-button class="navigation__item-name" [icon]="tagAction.value.icon" [iconColor]="'blue'"
+                    [bgColor]="'white'" [borderColor]="'greylight'">
+                </div>
+            </li>
+            }
+        }
+    </ul>
+</nav>
+}
