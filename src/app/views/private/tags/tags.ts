@@ -1,9 +1,9 @@
-import { Component, signal, inject, effect } from '@angular/core';
+import { Component, signal, inject, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InterfaceTagResponse } from '@models/interface.models';
 import { Interface } from '@services/interface';
 import { Notification } from '@services/notification';
 import { Button } from 'src/app/components/ui/button/button';
+import { Tag } from '@services/tag';
 @Component({
   selector: 'main[app-tags]',
   imports: [CommonModule, Button],
@@ -11,25 +11,28 @@ import { Button } from 'src/app/components/ui/button/button';
   styleUrl: './tags.scss'
 })
 export class Tags {
+
   // services injection
   interfaceService = inject(Interface);
   notificationService = inject(Notification);
+  tagService = inject(Tag);
+  
+  // Async data
+  public interfaceTag = computed(() => {
+    const resource = this.interfaceService.getTagNavigation;
+    const value = resource.value?.();
+    return value || {};
+  });
+  
+  public dataTagResponse = computed(() => {
+    const resource = this.tagService.getAllTags;
+    const value = resource.value?.();
+    return Array.isArray(value) ? value : [];
+  });
 
-   // Async data
-   public interfaceTag = signal<InterfaceTagResponse | undefined>({});
-
-    // Selected item
+  
+  // Selected item
   public selectedIdItem = signal(0);
-
-
-   constructor() {
-    effect(()=>{
-      const tagResource = this.interfaceService.getTagNavigation;
-      this.interfaceTag.set(tagResource.value())
-      console.log(this.interfaceTag())
-    })
-   }
-
 
 
   /**
@@ -71,4 +74,16 @@ export class Tags {
         break;
     }
   }
+
+
+    /**
+   * Manage steps for the item to select
+   * @param id 
+   * @param event 
+   * @returns 
+   */
+    selectItem(id: number, event: MouseEvent): void {
+      event.stopPropagation();
+      this.selectedIdItem.update(() => this.selectedIdItem() === id ? 0 : id) 
+    }
 }

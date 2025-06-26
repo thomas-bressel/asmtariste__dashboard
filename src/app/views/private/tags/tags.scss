@@ -1,24 +1,37 @@
 @use 'navigation.scss';
+@use 'mixins.scss' as *;
+
+
 
 .tag {
+    margin-top: 5rem;
+    @include flex($direction: column);
+
     &__list {
-        flex-wrap: wrap;
-        padding: 1rem;  
-        margin-top: 6rem;   
+        @include flex($direction: row, $wrap: wrap);
+        padding: 1rem;
     }
+
     &__item {
-       width: fit-content;
-       border: 4px solid transparent;
-       border-radius: 15px;
+        @include standard-border($size: 4px, $shape: solid, $color: transparent, $radius: 15px);
+        width: fit-content;
 
         &-color {
-           padding: .2rem .5rem;
-           border-radius: 10px;
+            @include flex($direction: row);
+            padding: .2rem .5rem;
+            border-radius: 10px;
         }
 
-        &-label {   
+        &-label {
             font-size: .8rem;
             font-weight: 600;
         }
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    .tag {
+        margin-top: 8rem;
     }
 }
