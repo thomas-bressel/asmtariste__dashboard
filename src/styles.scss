@@ -28,3 +28,9 @@ body {
 .hidden {
     display: none !important;
 }
+
+
+.active {
+    opacity: 1 !important;
+    cursor: pointer !important;
+}

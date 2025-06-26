@@ -39,7 +39,10 @@ export class App {
 
   }
   
-
+/**
+ * execute the method if a click event on the HTML document
+ * @param event 
+ */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     this.selectorService.unselectOnClickOutside(event)

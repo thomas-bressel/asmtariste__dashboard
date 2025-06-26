@@ -40,27 +40,26 @@ constructor() {}
 
   /**
    * Get the result of the action for each button
-   * @param id 
+   * @param action 
    */
-  selectBtn(id: string,  event?: MouseEvent) {
+  selectBtn(action: string,  event?: MouseEvent) {
     event?.stopPropagation();
-    console.log('selectBtn', id);
-
-    switch (id) {
+    switch (action) {
       case 'add':
-        console.log('add')
+        console.log('selectBtn action : ', action);
        
         break;
         case 'update':
-        console.log('update')
+          console.log('selectBtn action : ', action);
        
         break;
         case 'delete':
-        console.log('delete')
+          if (!this.selectorService.selectedIdItem()) return;
+          console.log('selectBtn action : ', action);
       
         break;
         case 'display':
-        console.log('display')
+          console.log('selectBtn action : ', action);
         
         break;
       default:
