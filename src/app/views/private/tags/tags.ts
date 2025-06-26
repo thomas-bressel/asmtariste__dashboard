@@ -30,7 +30,8 @@ export class Tags {
   public dataTagResponse = computed(() => {
     const resource = this.tagService.getAllTags;
     const value = resource.value?.();
-    return Array.isArray(value) ? value : [];
+    const tags =  Array.isArray(value) ? value : [];
+    return tags.sort((a, b) => a.label.localeCompare(b.label));
   });
 
 constructor() {}

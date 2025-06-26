@@ -13,12 +13,13 @@
     @include flex($direction: column);
 
     &__list {
-        @include flex($direction: row, $wrap: wrap);
+        @include flex($direction: row, $wrap: wrap, $gap: 1rem);
         padding: 1rem;
     }
 
     &__item {
         @include standard-border($size: 4px, $shape: solid, $color: transparent, $radius: 15px);
+        transition: 100ms ease-in-out;
         width: fit-content;
 
         &-color {
@@ -37,6 +38,13 @@
 @media screen and (min-width: 768px) {
 
     .tag {
-        margin-top: 10rem;
+        margin-top: 12rem;
+
+        &__item:hover {
+            cursor: pointer;
+            transform: scale(1.2);
+            transition: 100ms ease-in-out;
+        
+        }
     }
 }
