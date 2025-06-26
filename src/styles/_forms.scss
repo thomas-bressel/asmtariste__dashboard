@@ -79,12 +79,12 @@ textarea::placeholder {
 
 
 
-// /* */
-// .select {
-//   @include standard-border($radius: .5rem, $size: 2px, $color: color.$greylight);
-//   gap: 0.5rem;
+/* */
+.select {
+  @include standard-border($radius: .5rem, $size: 2px, $color: color.$greylight);
+  @include flex($direction: row, $align: center, $justify: center, $gap: .5rem);
 
-//   &__list {
-//     width: 100%;
-//   }
-// }
+  &__list {
+    width: 100%;
+  }
+}

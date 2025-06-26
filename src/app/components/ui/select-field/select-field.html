@@ -1,0 +1,15 @@
+<div class="select">
+    <label [for]="label()" hidden></label>
+  
+    <img class="select__icon" [src]="'icons/grey/' + icon()" alt="">
+    <select 
+      class="select__list background-white" 
+      [id]="label()"
+      (change)="onSelectChange($event)">
+      <option value="" selected>{{ placeholder() }}</option>
+      <ng-container *ngFor="let option of optionsList()">
+        <option [value]="option.value">{{ option.label }}</option>
+      </ng-container>
+    </select>
+  </div>
+  

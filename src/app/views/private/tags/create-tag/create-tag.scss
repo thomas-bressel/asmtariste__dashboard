@@ -28,7 +28,18 @@
     }
 
     &__select {
-        gap: 1rem;
+        @include flex($direction: column, $gap: 1rem);
         width: 100%;
     }
+    
+    &__tag {
+        @include standard-border($size: 4px, $shape: solid, $color: transparent, $radius: 15px);
+        
+        &-color {
+            padding: .2rem .5rem;
+            border-radius: 10px;
+         }
+    }
 }
+
+
