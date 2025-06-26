@@ -33,9 +33,12 @@ export class Tag {
     * Create a tag
     */
   public async createTag(formData: URLSearchParams): Promise<Response> {
-    return await fetch(`${CONTENT_API_URI}/content/v1/tag/create`, {
+    return await fetch(`${CONTENT_API_URI}/content/v1/admin/tag/create`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${this.serviceAuth.getAccessToken()}`
+      },
       body: formData
     });
   }
