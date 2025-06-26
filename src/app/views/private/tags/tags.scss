@@ -1,6 +1,11 @@
 @use 'navigation.scss';
+@use 'colors.scss' as color;
 @use 'mixins.scss' as *;
 
+
+.selected {
+    border-color: color.$greendark !important;
+}
 
 
 .tag {
@@ -32,6 +37,6 @@
 @media screen and (min-width: 768px) {
 
     .tag {
-        margin-top: 8rem;
+        margin-top: 10rem;
     }
 }

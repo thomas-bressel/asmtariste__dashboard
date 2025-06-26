@@ -1,12 +1,15 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, HostListener } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Selector {
 
-  // Sign contains the actual component if focused
-  currentFocusedId = signal<string | null>(null);
+  // Actual input component if focused
+  public currentFocusedId = signal<string | null>(null);
+
+  // Actuel item if selected
+  public selectedIdItem = signal(0);
 
   /**
    * Enable focus on a specific component
@@ -31,4 +34,36 @@ export class Selector {
   isFocused(componentId: string): boolean {
     return this.currentFocusedId() === componentId;
   }
+
+
+
+  /**
+* Manage steps for the item to select
+* @param id 
+* @param event 
+* @returns 
+*/
+  selectItem(id: number, event: MouseEvent): void {
+    event.stopPropagation();
+    console.log('Item selectionné : ',event.target);
+    console.log('Id de l\'Item selectionné : ',id);
+    this.selectedIdItem.update(() => this.selectedIdItem() === id ? 0 : id)
+  }
+
+
+
+  /**
+* Listen for click events outside the user nav to unselect the item
+* @param event 
+* @returns 
+*/
+  unselectOnClickOutside(event: MouseEvent) {
+    console.log('Je suis dans la methode unselect')
+    const clickedElement = event.target as HTMLElement;
+
+    // Check if the clicked element is inside the user nav
+    if (clickedElement.closest('#tag-nav')) return;
+    this.selectedIdItem.set(0);
+  }
+
 }

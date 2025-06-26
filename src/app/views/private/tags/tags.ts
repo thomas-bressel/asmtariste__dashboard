@@ -1,9 +1,10 @@
-import { Component, signal, inject, effect, computed } from '@angular/core';
+import { Component, effect, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Interface } from '@services/interface';
 import { Notification } from '@services/notification';
 import { Button } from 'src/app/components/ui/button/button';
 import { Tag } from '@services/tag';
+import { Selector } from '@services/selector';
 @Component({
   selector: 'main[app-tags]',
   imports: [CommonModule, Button],
@@ -16,23 +17,25 @@ export class Tags {
   interfaceService = inject(Interface);
   notificationService = inject(Notification);
   tagService = inject(Tag);
+  selectorService = inject(Selector);
   
-  // Async data
+  // Async data to display interface menu
   public interfaceTag = computed(() => {
     const resource = this.interfaceService.getTagNavigation;
     const value = resource.value?.();
     return value || {};
   });
   
+  // Async data to display tags list
   public dataTagResponse = computed(() => {
     const resource = this.tagService.getAllTags;
     const value = resource.value?.();
     return Array.isArray(value) ? value : [];
   });
 
-  
-  // Selected item
-  public selectedIdItem = signal(0);
+constructor() {}
+
+
 
 
   /**
@@ -46,44 +49,25 @@ export class Tags {
     switch (id) {
       case 'add':
         console.log('add')
-        // this.isCreateTagOverlay = !this.isCreateTagOverlay;
-        // this.isMask = true;
+       
         break;
         case 'update':
         console.log('update')
-        //  if (!this.selectedIdItem) return;
-        // this.isUpdateTagOverlay = !this.isUpdateTagOverlay;
-        // this.isMask = true;
+       
         break;
         case 'delete':
         console.log('delete')
-        //  if (!this.selectedIdItem) return;
-        // this.bgColor = 'redlight';
-        // this.notificationAction = 'delete';
-        // this.notificationsService.displayNotification(this, 'is-delete', 0, '/backoffice', 'client', true);
+      
         break;
         case 'display':
         console.log('display')
-        //  if (!this.selectedIdItem) return;
-        // this.bgColor = 'yellowlight';
-        // this.notificationAction = 'display';
-        // this.notificationsService.displayNotification(this, 'is-display', 0, '/backoffice', 'client', true);
+        
         break;
       default:
-        // this.isCreateTagOverlay = false;
+      
         break;
     }
   }
 
 
-    /**
-   * Manage steps for the item to select
-   * @param id 
-   * @param event 
-   * @returns 
-   */
-    selectItem(id: number, event: MouseEvent): void {
-      event.stopPropagation();
-      this.selectedIdItem.update(() => this.selectedIdItem() === id ? 0 : id) 
-    }
 }
