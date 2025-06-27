@@ -110,15 +110,12 @@ export class Notification {
           this.router.navigate(['/login']);
           break;
         case 'delete-tag':
-          // INJECTION LAZY - seulement quand nécessaire
           const tagService = this.injector.get(Tag);
           const tagId = this.tagIdToDelete();
           
           if (tagId > 0) {
-            console.log('Suppression du tag:', tagId);
             await tagService.deleteTag(tagId);
             tagService.removeTagFromStore(tagId);
-            console.log('Tag supprimé avec succès');
           }
           break;
         default:

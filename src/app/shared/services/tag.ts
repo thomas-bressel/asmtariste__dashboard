@@ -130,7 +130,7 @@ export class Tag {
     const token = this.serviceAuth.getAccessToken();
     if (!token) throw new Error('No token available');
         
-    return await fetch(`${CONTENT_API_URI}/content/v1/admin/tag/delete/${tagId}`, {
+    return await fetch(`${CONTENT_API_URI}/content/v1/admin/tag/delete?id=${tagId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`
