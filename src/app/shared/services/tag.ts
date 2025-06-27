@@ -71,9 +71,7 @@ export class Tag {
         }
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
+      if (!response.ok)  throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
       const data = await response.json();
       
@@ -132,7 +130,7 @@ export class Tag {
     const token = this.serviceAuth.getAccessToken();
     if (!token) throw new Error('No token available');
         
-    return await fetch(`${CONTENT_API_URI}/content/v1/admin/tag/delete/${tagId}`, {
+    return await fetch(`${CONTENT_API_URI}/content/v1/admin/tag/delete?id=${tagId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`
@@ -179,13 +177,4 @@ export class Tag {
     }
   }
 
-
-
-  /**
-   * Force reload data from the server
-   */
-  public async forceReload() {
-    this.toggleLocalStore.set(false);
-    await this.loadTags();
-  }
 }
