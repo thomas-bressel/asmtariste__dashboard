@@ -1,1 +1,17 @@
-<p>navigation works!</p>
+<ul class="navigation__list">
+    @if (interfaceForNavigationComponent()) {
+    @for (key of interfaceForNavigationComponent() | keyvalue ; track key.key ) {
+    <ng-container>
+        @for (action of key.value | keyvalue; track action.key) {
+        <li class="navigation__item" (click)="handleCloseMenu()">
+            <a [routerLink]="'/dashboard/' + action.value.route" routerLinkActive="active" class="navigation__item-link">
+                <!-- <i class="navigation__item-emoji">{{action.value.emoji}}</i> -->
+                <img [src]="'../icons/blue/' + action.value.icon" alt="" class="navigation__item-icon">
+                <p class="navigation__item-name">{{ action.value.name }}</p>
+            </a>
+        </li>
+        }
+    </ng-container>
+    }
+    }
+</ul>

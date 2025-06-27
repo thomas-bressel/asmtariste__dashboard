@@ -1,1 +1,49 @@
-<p>login works!</p>
+
+
+
+<header class="login__header">
+    <h1 class="login__title">Identifiez-vous ICI</h1>
+    <p class="login__hook">Et commencez à utiliser Drawer en quelques secondes</p>
+</header>
+
+
+<form [formGroup]="authForm()" class="login__form flex-c" (submit)="onSubmit()">
+
+
+    <!-- data to use -->
+    @let nicknameError = authForm().get('nickname')?.errors;
+    @let passwordError = authForm().get('password')?.errors;
+
+    <!-- Field for username -->
+    <div app-input-field [icon]="'user'" [type]="'text'" [name]="'nickname'"
+        [placeholder]="'Entrez votre nom d\'utilisateur'" [label]="'nickname'" [minlength]="'3'" [maxlength]="'25'"
+        (fieldValue)="handleNicknameValueChanged($event)">
+    </div>
+    @if (nicknameError?.['minlength']) {
+    <p class="error">Le nom d'utilisateur doit faire entre 3 et 25 caractères</p>
+    }
+
+
+    <!-- Field for password -->
+    <div app-input-field [icon]="'eye-on'" [type]="'password'" [name]="'password'"
+        [placeholder]="'Entrez votre mot de passe'" [label]="'password'" [minlength]="'4'" [maxlength]="'35'"
+        (fieldValue)="handlePasswordValueChanged($event)">
+    </div>
+    @if (passwordError?.['minlength']) {
+    <p class="error">Le mot de passe doit faire entre 4 et 35 caractères</p>
+    }
+
+    <!-- Button to validate the form -->
+    @if(authForm().valid) {
+    <div app-button [type]="'submit'" [text]="'Se connecter'" [bgColor]="'purple'" [txtColor]="'white'"
+        [borderColor]="'purple'" [shadowColor]="'purple'"></div>
+    }
+
+</form>
+
+
+
+<footer class="login__footer">
+    <img class="login__footer-logo" src="./logos/drawer_logo-only-purple.webp" alt="">
+    <p class="login__footer-hook">L'outil de gestion de contenu et plus.</p>
+</footer>

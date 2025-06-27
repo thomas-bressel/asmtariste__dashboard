@@ -1,0 +1,47 @@
+@use "fonts" as font;
+@use "colors" as color;
+@use "mixins" as *;
+
+:host {
+    @include flex($direction: column, $gap: 2.5rem);
+}
+
+
+.login {
+
+    &__header {
+        text-align: center;
+    }
+
+    &__title {
+        @include text($size: 2rem, $font: font.$JakartaExtraBold);
+    }
+
+    &__hook {
+        @include text($size: 1rem, $font: font.$JakartaMedium);
+    }
+
+    &__form {
+        @include flex($direction: column, $gap: 1rem);
+    }
+
+    
+    &__footer {
+        @include flex($justify: center, $gap: .5rem);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        padding: 1rem;
+        
+        &-logo {
+            max-width: 24px;
+            max-height: 24px;
+        }
+
+        &-hook {
+            @include text($size: 1rem, $font: font.$JakartaBold);
+        }
+    }
+}

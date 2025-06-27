@@ -1,0 +1,48 @@
+
+<!-- Header for title and tag preview -->
+<header class="create__header">
+    <h1 class="create__title">Ajouter un nouveau tag</h1>
+    <div
+        class="create__tag  {{createTagForm().get('background_color')?.value}} {{createTagForm().get('border_color')?.value}}">
+        <p class="create__tag-color {{createTagForm().get('color')?.value}}">
+            <span>
+                <img src="" alt="">
+            </span>
+            {{ createTagForm().get('label')?.value || 'Aperçu du tag' }}
+        </p>
+    </div>
+</header>
+
+
+<!-- Form with tag name, and 3 selector field to personnalize colors -->
+<form [formGroup]="createTagForm()" class="create__form" (ngSubmit)="onSubmit()">
+
+    <!-- Tag name -->
+    <div app-input-field [icon]="'user'" [type]="'text'" [name]="'label'" [placeholder]="'Entrez votre nom de tag'"
+        [label]="'label'" [minlength]="'3'" [maxlength]="'25'" (fieldValue)="handleLabelValueChanged($event)"></div>
+
+
+    <div class="create__select">
+
+        <!-- Text color -->
+        <div app-select-field [icon]="'color.svg'" [label]="'colorOptions'" [optionsList]="textColors"
+            [placeholder]="'Couleur du texte'" (fieldValue)="handleSelectBoxValueChanged($event, 'textColor')">
+        </div>
+
+        <!-- Background Color-->
+        <div app-select-field [icon]="'color.svg'" [label]="'colorOptions'" [optionsList]="backgroundColors"
+            [placeholder]="'Couleur du fond'" (fieldValue)="handleSelectBoxValueChanged($event, 'backgroundColor')">
+        </div>
+
+        <!-- Border color -->
+        <div app-select-field [icon]="'color.svg'" [label]="'colorOptions'" [optionsList]="borderColors"
+            [placeholder]="'Couleur de la bordure'" (fieldValue)="handleSelectBoxValueChanged($event, 'borderColor')">
+        </div>
+    </div>
+
+    <!-- 2 buttons -->
+    <div app-button [type]="'submit'" [text]="'Valider'" [bgColor]="'purple'" [txtColor]="'white'"
+        [borderColor]="'purple'" [shadowColor]="'purple'"></div>
+    <div app-button [type]="'cancel'" [text]="'Annuler'" [bgColor]="'white'" [txtColor]="'black'"
+        [borderColor]="'greylight'" [shadowColor]="'greylight'" (buttonClicked)="onCancel()"></div>
+</form>

@@ -1,0 +1,24 @@
+
+<div class="input" 
+    [ngClass]="(isFocused()) ? 'selected' : ''" 
+    (click)="onFieldClick($event)">
+    
+    <label 
+        [for]="label()"   
+        hidden>{{placeholder()}}
+    </label>
+
+    <img class="input__img" 
+        [src]="'icons/grey/' + currentIcon() + '.svg'" alt="" 
+        (click)="onIconClick($event)">
+
+    <input class="input__field" 
+        [id]="label()" 
+        [name]="name()"  
+        [type]="currentType()" 
+        [placeholder]="placeholder()" 
+        [maxLength]="maxlength()"
+        [minLength]="minlength()"
+        (input)="onInputChange($event)">
+</div>
+

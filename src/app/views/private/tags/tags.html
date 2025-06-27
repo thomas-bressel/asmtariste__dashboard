@@ -1,1 +1,46 @@
-<p>tags works!</p>
+
+
+
+<!-- Display a list of tags -->
+@if(dataTagResponse()) {
+<section class="tag">
+    <ul id="tag-list" class="tag__list">
+        @for(tag of dataTagResponse(); track tag.id_tags) {
+        <li [id]="tag.id_tags" class="tag__item" [class.selected]="selectorService.selectedIdItem() === tag.id_tags"
+            (click)="selectorService.selectItem(tag.id_tags, $event)">
+            <p class="tag__item-color" [class]="tag.background_color">
+                <span class="tag__item-label" [class]="tag.color">{{tag.label}}</span>
+            </p>
+        </li>
+        }
+    </ul>
+</section>
+} @else {
+<div class="debug">
+    <p>Aucun tag à afficher</p>
+</div>
+}
+
+
+<router-outlet></router-outlet>
+
+<!-- Display the action menu -->
+@if(interfaceTag()) {
+<nav id="tag-nav" class="navigation background-white">
+    <ul class="navigation__list">
+
+        @for (tagGroup of interfaceTag() | keyvalue ; track tagGroup.key ) {
+        @for (tagAction of tagGroup.value | keyvalue; track tagAction.key) {
+        <li [id]="tagAction.value.action" class="nav-item-js navigation__item navigation__action background-white"
+            [ngClass]="{'active': tagAction.value.state || selectorService.selectedIdItem()}"
+            (click)="selectBtn(tagAction.value.action, $event)">
+
+            <div app-button class="navigation__item-name" [icon]="tagAction.value.icon" [iconColor]="'blue'"
+                [bgColor]="'white'" [borderColor]="'greylight'">
+            </div>
+        </li>
+        }
+        }
+    </ul>
+</nav>
+}

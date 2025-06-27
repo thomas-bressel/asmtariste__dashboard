@@ -1,0 +1,51 @@
+@use 'navigation.scss';
+@use 'colors.scss' as color;
+@use 'mixins.scss' as *;
+@use 'animations' as anim;
+
+
+.selected {
+    border-color: color.$greendark !important;
+}
+
+
+.tag {
+    margin-top: 5rem;
+    @include flex($direction: column);
+
+    &__list {
+        @include flex($direction: row, $wrap: wrap, $gap: 1rem);
+        padding: 1rem;
+    }
+
+    &__item {
+        @include standard-border($size: 4px, $shape: solid, $color: transparent, $radius: 15px);
+        transition: anim.$tag-hover ease-in-out;
+        width: fit-content;
+
+        &-color {
+            @include flex($direction: row);
+            padding: .2rem .5rem;
+            border-radius: 10px;
+        }
+
+        &-label {
+            font-size: .8rem;
+            font-weight: 600;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    .tag {
+        margin-top: 12rem;
+
+        &__item:hover {
+            cursor: pointer;
+            transform: scale(anim.$tag-scale);
+            transition: anim.$tag-hover ease-in-out;
+        
+        }
+    }
+}

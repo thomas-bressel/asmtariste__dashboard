@@ -1,1 +1,17 @@
-<p>notification works!</p>
+<div class="mask"></div>
+
+
+<div class="notification" [ngClass]="'background-' + backgroundColor()">
+    <p class="notification__text">{{notificationMessage()}}</p>
+
+    @if(isChoiceButtons()) {
+    <div class="notification__buttons">
+
+        <div app-button [text]="'Confirmer'" [bgColor]="'purple'" [txtColor]="'white'" [borderColor]="'purple'"
+            [shadowColor]="'purple'" (click)="onChoice(true)"></div>
+
+        <div app-button [text]="'Annuler'" [bgColor]="'white'" [txtColor]="'black'" [borderColor]="'greylight'"
+            [shadowColor]="'greylight'" (click)="onChoice(false)"></div>
+    </div>
+    }
+</div>

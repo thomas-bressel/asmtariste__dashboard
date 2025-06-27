@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+@use "./styles/reset";
+@use "./styles/forms";
+
+@use "./styles/loaders"; // z-index : 1000
+@use "./styles/masks";  // z-index : 1500
+
+@use "./styles/fonts" as font;
+@use "./styles/colors" as color;
+
+/* Globar Styles*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: font.$JakartaRegular;
+}
+
+body {
+    // padding: 2rem;
+    color: color.$black;
+    background-color: color.$white;
+    font-size: 16px;
+}
+
+
+
+.hidden {
+    display: none !important;
+}
+
+
+.active {
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
