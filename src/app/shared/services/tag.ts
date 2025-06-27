@@ -1,6 +1,5 @@
 // Angular imports
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { httpResource } from '@angular/common/http';
 
 // Service imports
 import { Auth } from './auth';
@@ -19,29 +18,22 @@ export class Tag {
   // Dependencies injection
   readonly serviceAuth = inject(Auth);
 
-  // Signal store
+  // Signal to store temporary modification
   private tagsStore = signal<TagData[]>([]);
+
+  // Server datas (datas received from the server)
+  private serverTags = signal<TagData[]>([]);
+
+  // Flag to know which store to use (Local or server)
   private toggleLocalStore = signal(false);
+  private isLoading = signal(false);
 
 
+ 
   /**
-   * httpResource signal to get all tags from the server
-   */
-  public readonly getAllTags = httpResource<TagDataResponse>(() => ({
-    url: `${CONTENT_API_URI}/content/v1/admin/tags`,
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${this.serviceAuth.getAccessToken()}`
-    }
-  }));
-
-
-
-  /**
-   * Computed signal with httpResource and  local store
+   * Computed signal with server cache and local store
    */
   public readonly tagsData = computed(() => {
-
     // Use the local store
     if (this.toggleLocalStore()) {
       return this.tagsStore()
@@ -49,25 +41,66 @@ export class Tag {
         .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
     }
 
-    // Use the server call
-    const value = this.getAllTags.value?.();
-    if (Array.isArray(value)) {
-      return value
-        .filter(tag => tag && tag.label)
-        .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
-    }
-
-    return [];
+    // Use the server datas
+    return this.serverTags()
+      .filter(tag => tag && tag.label)
+      .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
   });
+
+
+
+  /**
+   * Loading state
+   */
+  public readonly loading = computed(() => this.isLoading());
+
+
+
+  /**
+   * Get all tags from server
+   * @returns 
+   */
+  public async getAllTags(): Promise<TagData[]> {
+    try {
+      this.isLoading.set(true);
+      
+      const response = await fetch(`${CONTENT_API_URI}/content/v1/admin/tags`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${this.serviceAuth.getAccessToken()}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      // Update 
+      if (Array.isArray(data)) {
+        this.serverTags.set(data);
+        return data;
+      }
+      
+      return [];
+      
+    } catch (error) {
+      console.error('Erreur lors du chargement des tags:', error);
+      return [];
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
 
 
 
   /**
    * Loading tags from server
    */
-  public loadTags() {
+  public async loadTags() {
     this.toggleLocalStore.set(false);
-    this.getAllTags.reload?.();
+    await this.getAllTags();
   }
 
 
@@ -92,13 +125,14 @@ export class Tag {
 
   /**
    * Delete tag 
+   * @param tagId 
    * @returns 
    */
-  public async deleteTag(): Promise<Response> {
+  public async deleteTag(tagId: number): Promise<Response> {
     const token = this.serviceAuth.getAccessToken();
     if (!token) throw new Error('No token available');
-    this.serviceAuth.clearTokens();
-    return await fetch(`${CONTENT_API_URI}/content/v1/admin/tag/delete`, {
+        
+    return await fetch(`${CONTENT_API_URI}/content/v1/admin/tag/delete/${tagId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`
@@ -114,13 +148,13 @@ export class Tag {
    */
   public addTagToStore(newTag: TagData) {
 
-    // get current tags from httpResource
-    const currentTags = this.getAllTags.value?.();
+    // Get actual tags
+    const currentTags = this.toggleLocalStore() ? this.tagsStore() : this.serverTags();
 
     if (Array.isArray(currentTags)) {
-      // add the tag with old tags
+      // Add new tag to old tag
       const allTags = [...currentTags, newTag];
-      this.tagsStore.set(allTags); // update the store
+      this.tagsStore.set(allTags);
     } else {
       this.tagsStore.set([newTag]);
     }
@@ -135,7 +169,14 @@ export class Tag {
    * @param tagId 
    */
   public removeTagFromStore(tagId: number) {
-    this.tagsStore.update(tags => tags.filter(tag => tag.id_tags !== tagId));
+    
+    if (this.toggleLocalStore()) {
+      this.tagsStore.update(tags => tags.filter(tag => tag.id_tags !== tagId));
+    } else {
+      const updatedTags = this.serverTags().filter(tag => tag.id_tags !== tagId);
+      this.tagsStore.set(updatedTags);
+      this.toggleLocalStore.set(true);
+    }
   }
 
 
@@ -143,8 +184,8 @@ export class Tag {
   /**
    * Force reload data from the server
    */
-  public forceReload() {
+  public async forceReload() {
     this.toggleLocalStore.set(false);
-    this.getAllTags.reload?.();
+    await this.loadTags();
   }
 }

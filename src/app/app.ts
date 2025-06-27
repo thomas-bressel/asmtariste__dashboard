@@ -1,11 +1,18 @@
+// Angular imports
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, inject, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+// Service imports
+import { Loading } from '@services/loading'; 
 import { Auth } from '@services/auth';
-import { Loading } from '@services/loading';
-import { Notification  as NotificationComponent } from './components/overlays/notification/notification';
-import { Notification as NotificationService} from '@services/notification';
+import { Notification as NotificationService } from '@services/notification';
 import { Selector } from '@services/selector';
+
+// Component imports
+import { Notification as NotificationComponent } from './components/overlays/notification/notification';
+
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, NotificationComponent],
@@ -14,18 +21,17 @@ import { Selector } from '@services/selector';
 })
 export class App {
 
-  readonly authService = inject(Auth)
+  readonly authService = inject(Auth);
   readonly loadingService = inject(Loading);
   readonly notificationService = inject(NotificationService);
   readonly selectorService = inject(Selector);
-
 
   // For template
   isLoading = this.loadingService.isLoading;
 
   constructor() {
     effect(() => {
-      const status = this.authService.sessionVerification.status(); // error or resolved
+      const status = this.authService.sessionVerification.status();
       const error = this.authService.sessionVerification.error();
 
       this.loadingService.hide();
@@ -35,17 +41,16 @@ export class App {
       }
     });
 
+    // Reference of selectorService for init
     this.selectorService;
-
   }
   
-/**
- * execute the method if a click event on the HTML document
- * @param event 
- */
+  /**
+   * execute the method if a click event on the HTML document
+   * @param event 
+   */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    this.selectorService.unselectOnClickOutside(event)
+    this.selectorService.unselectOnClickOutside(event);
   }
-
 }

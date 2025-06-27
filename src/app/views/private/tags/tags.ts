@@ -42,13 +42,18 @@ export class Tags implements OnInit {
     return this.tagService.tagsData();
   });
 
+  // Signal for the state of the loading
+  public isLoading = computed(() => {
+    return this.tagService.loading();
+  });
+
   constructor() { }
 
   /**
    * Loading datas, all tags 
    */
-  ngOnInit(): void {
-    this.tagService.loadTags();
+  async ngOnInit(): Promise<void> {
+    await this.tagService.loadTags();
   }
 
   /**
@@ -65,8 +70,11 @@ export class Tags implements OnInit {
         console.log('selectBtn action : ', action);
         break;
       case 'delete':
-        if (!this.selectorService.selectedIdItem()) return;
-        console.log('selectBtn action : ', action);
+        const selectedId = this.selectorService.selectedIdItem();
+        if (!selectedId) return;
+        
+        // Setting the notification
+        this.notificationService.setTagToDelete(selectedId);
         this.notificationService.configNotification('yellow', 'delete-tag');
         this.notificationService.displayNotification('IS_DELETE_TAG', 0, null, 'client', true);
         break;

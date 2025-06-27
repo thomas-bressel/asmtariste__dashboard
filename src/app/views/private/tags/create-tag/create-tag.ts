@@ -61,18 +61,16 @@ export class CreateTag {
    * get label field values and update signals
    * @param value 
    */
-  handleLabelValueChanged(value: string) {
+  public handleLabelValueChanged(value: string) {
     this.labelValue.set(value);
   }
-
-
 
   /**
    * get different color values depending on type of select field
    * @param value 
    * @param type 
    */
-  handleSelectBoxValueChanged(value: string, type: string) {
+  public handleSelectBoxValueChanged(value: string, type: string) {
     if (type === 'textColor') {
       this.colorValue.set(value);
     } else if (type === 'backgroundColor') {
@@ -81,9 +79,6 @@ export class CreateTag {
       this.borderValue.set(value);
     }
   }
-
-
-
 
   /**
    * Send datas 
@@ -121,6 +116,8 @@ export class CreateTag {
           is_display: true
         };
 
+        console.log('Tag créé avec l\'ID:', data);
+        
         // add to the store
         this.tagService.addTagToStore(newTag);
 
@@ -137,12 +134,10 @@ export class CreateTag {
     }
   }
 
-
-
   /**
    * Cancel the form and back to its parent route
    */
-  onCancel() {
+  public onCancel() {
     this.createTagForm().reset();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
