@@ -2,6 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Loading } from './loading';
 import { Auth } from './auth';
+import { Tag } from './tag';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +10,7 @@ export class Notification {
   router = inject(Router);
   loadingService = inject(Loading);
   authService = inject(Auth);
+  // tagService = inject(Tag);
 
   readonly notificationMessages: Record<string, string> = {
     'LOGIN_SUCCESS': 'Connexion réussie',
@@ -90,7 +92,9 @@ export class Notification {
     this.isNotificationWindow.set(false);
   }
 
-
+/**
+ * 
+ */
   public action(): void {
     const action = this.actionOnConfirm();
     this.hide();
@@ -100,6 +104,9 @@ export class Notification {
         this.authService.deleteSession();
         this.router.navigate(['/login'])
         break;
+      // case 'delete-tag':
+      //   this.tagService.deleteTag();
+      //   break;
   
       default:
         console.warn(`Unhandled action: ${action}`);

@@ -1,7 +1,8 @@
 <!-- Logo Drawer in top left -->
 <div app-button class="header__logo" [img]="'drawer_logo-black'" [bgColor]="'white'" [borderColor]="'greylight'"></div>
 
-<div app-button class="header__logout"  [icon]="'off.svg'" [iconColor]="'white'" [bgColor]="'purple'" [borderColor]="'purple'" [shadowColor]="'purple'" (click)="handleLogout()"></div>
+<div app-button class="header__logout"  [icon]="'off.svg'" [iconColor]="'white'" [bgColor]="'purple'" [borderColor]="'purple'" [shadowColor]="'purple'" 
+(click)="handleLogout()"></div>
 
 <!-- Burger button on mobile -->
 <div app-button class="header__burger" [class.hidden]="isNavigationOverlay()" [icon]="'burger.svg'"

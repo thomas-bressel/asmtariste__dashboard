@@ -3,7 +3,7 @@ FROM node:22-alpine
 WORKDIR /app
 
 # Installer Angular CLI globalement
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@20.0.0
 
 # Copier les fichiers de configuration des dépendances
 COPY package*.json ./

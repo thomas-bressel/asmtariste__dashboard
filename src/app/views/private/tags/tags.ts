@@ -8,6 +8,7 @@ import { Interface } from '@services/interface';
 import { Tag } from '@services/tag';
 import { Loading } from '@services/loading';
 import { Selector } from '@services/selector';
+import { Notification } from '@services/notification';
 
 // Component imports
 import { Button } from 'src/app/components/ui/button/button';
@@ -27,7 +28,7 @@ export class Tags implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   loadingService = inject(Loading);
-
+  notificationService = inject(Notification);
 
   // Computed signal triggered when getTagNavigation is updated
   public interfaceTag = computed(() => {
@@ -41,17 +42,14 @@ export class Tags implements OnInit {
     return this.tagService.tagsData();
   });
 
-
-
   constructor() { }
 
   /**
-   * Method used to force the reload of the data on each component display
+   * Loading datas, all tags 
    */
   ngOnInit(): void {
-    this.tagService.forceReload()
+    this.tagService.loadTags();
   }
-
 
   /**
    * Get the result of the action for each button
@@ -62,26 +60,21 @@ export class Tags implements OnInit {
     switch (action) {
       case 'add':
         this.router.navigate(['./create'], { relativeTo: this.route });
-
         break;
       case 'update':
         console.log('selectBtn action : ', action);
-
         break;
       case 'delete':
         if (!this.selectorService.selectedIdItem()) return;
         console.log('selectBtn action : ', action);
-
+        this.notificationService.configNotification('yellow', 'delete-tag');
+        this.notificationService.displayNotification('IS_DELETE_TAG', 0, null, 'client', true);
         break;
       case 'display':
         console.log('selectBtn action : ', action);
-
         break;
       default:
-
         break;
     }
   }
-
-
 }

@@ -9,4 +9,3 @@ const contentApiEnv = {
 
 export const USER_API_URI: string = userApiEnv.local;
 export const CONTENT_API_URI: string = contentApiEnv.local;
-

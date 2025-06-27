@@ -9,11 +9,10 @@ import { Loading } from '@services/loading';
 import { Tag } from '@services/tag';
 import { Notification } from '@services/notification';
 
-// Components import
+// Components import
 import { InputField } from 'src/app/components/ui/input-field/input-field';
 import { Button } from 'src/app/components/ui/button/button';
 import { SelectField } from 'src/app/components/ui/select-field/select-field';
-
 
 @Component({
   selector: 'section[app-create-tag]',
@@ -34,8 +33,7 @@ export class CreateTag {
   private tagService = inject(Tag);
   private notificationService = inject(Notification);
 
-
-  // Fields Velues
+  // Fields Values
   labelValue = signal<string>('');
   colorValue = signal<string>('');
   backgroundValue = signal<string>('');
@@ -44,10 +42,7 @@ export class CreateTag {
   // Form state
   createTagForm = signal<FormGroup>(this.formService.initCreateTagForm())
 
-  // import datas
-  //
-  // *******  MUST BE IN A MONGO DB COLLECTION ******
-  //
+  // Import datas
   textColors = this.formService.textColor;
   backgroundColors = this.formService.backgroundColor;
   borderColors = this.formService.borderColor;
@@ -61,8 +56,6 @@ export class CreateTag {
       this.createTagForm().get('border_color')?.setValue(this.borderValue(), { emitEvent: false });
     })
   }
-
-
 
   /**
    * get label field values and update signals
@@ -90,18 +83,17 @@ export class CreateTag {
   }
 
 
-/**
- * Send datas 
- * @returns 
- */
-  async onSubmit() {
 
+
+  /**
+   * Send datas 
+   * @returns 
+   */
+  public async onSubmit() {
     if (this.createTagForm().valid) {
-
       this.loadingService.show();
       const { label, color, background_color, border_color } = this.createTagForm().value;
 
-      // FormData encording params
       const formData = new URLSearchParams();
       formData.append('label', label);
       formData.append('color', color);
@@ -118,36 +110,33 @@ export class CreateTag {
           this.loadingService.hide();
           return;
         }
-        
-      // Build the new tag with the received id
-      const newTag = {
-        id_tags: data,
-        label: label,
-        color: color,
-        background_color: background_color,
-        border_color: border_color,
-        is_display: true
-      };
 
-      // Add the new tag to the old tag list
-      this.tagService.addTagToStore(newTag);
+        // Build the new tag with the received id
+        const newTag = {
+          id_tags: data,
+          label: label,
+          color: color,
+          background_color: background_color,
+          border_color: border_color,
+          is_display: true
+        };
+
+        // add to the store
+        this.tagService.addTagToStore(newTag);
 
         // Send a notification
         this.notificationService.configNotification('green');
         this.notificationService.displayNotification("TAG_CREATE_SUCCESS", 2000, '/dashboard/tags', 'client', false);
 
       } catch (error) {
+        console.error('Erreur lors de la création:', error);
         this.loadingService.hide();
       } finally {
         this.loadingService.hide();
-
       }
-
-
-
     }
-
   }
+
 
 
   /**
@@ -157,5 +146,4 @@ export class CreateTag {
     this.createTagForm().reset();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
-
 }
