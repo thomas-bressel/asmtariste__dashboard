@@ -7,7 +7,9 @@ import { USER_API_URI } from '../config';
 })
 export class Auth {
 
-
+/**
+ * Triggered the verification of the session 
+ */
  public readonly sessionVerification = httpResource<boolean>(() => {
    return {
      url: `${USER_API_URI}/user/v1/admin/verify`,
@@ -18,6 +20,8 @@ export class Auth {
    };
  });
 
+
+ 
  /**
   * Check the session by fetch (guard)
   * @returns Promise<Response>
@@ -116,6 +120,7 @@ export class Auth {
  }
 
 
+
  /**
   * Clear tokens when logout user
   */
@@ -124,6 +129,8 @@ export class Auth {
    localStorage.removeItem('refreshToken');
  }
 
+
+
  /**
   * Get access token from the local storage
   * @returns 
@@ -131,6 +138,8 @@ export class Auth {
  public getAccessToken(): string | null {
    return localStorage.getItem('accessToken');
  }
+
+
 
  /**
   * Get refresh token from the local storage

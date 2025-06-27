@@ -11,6 +11,8 @@ import { Loading } from '@services/loading';
 
 // component imports
 import { InputField } from 'src/app/components/ui/input-field/input-field';
+
+
 @Component({
   selector: 'main[app-login]',
   host: {
@@ -21,6 +23,8 @@ import { InputField } from 'src/app/components/ui/input-field/input-field';
   styleUrl: './login.scss'
 })
 export class Login {
+
+  // Dependencies injection
   private formService = inject(Form);
   private authService = inject(Auth);
   private loadingService = inject(Loading);

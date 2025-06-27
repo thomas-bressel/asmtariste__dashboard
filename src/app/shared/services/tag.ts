@@ -71,9 +71,7 @@ export class Tag {
         }
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
+      if (!response.ok)  throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
       const data = await response.json();
       
@@ -179,13 +177,4 @@ export class Tag {
     }
   }
 
-
-
-  /**
-   * Force reload data from the server
-   */
-  public async forceReload() {
-    this.toggleLocalStore.set(false);
-    await this.loadTags();
-  }
 }

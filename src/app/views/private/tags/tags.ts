@@ -32,9 +32,8 @@ export class Tags implements OnInit {
 
   // Computed signal triggered when getTagNavigation is updated
   public interfaceTag = computed(() => {
-    const resource = this.interfaceService.getTagNavigation;
-    const value = resource.value();
-    return value || {};
+    const navigationData = this.interfaceService.getTagNavigation();
+    return navigationData.value() || {};
   });
 
   // Computed signal triggered when tagsData is updated from the service
@@ -53,7 +52,12 @@ export class Tags implements OnInit {
    * Loading datas, all tags 
    */
   async ngOnInit(): Promise<void> {
-    await this.tagService.loadTags();
+
+    // Loading both datas
+    await Promise.all([
+      this.tagService.loadTags(),
+      this.interfaceService.loadTagNavigation()
+    ]);
   }
 
   /**

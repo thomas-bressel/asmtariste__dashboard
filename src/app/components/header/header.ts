@@ -1,4 +1,4 @@
-import { Component, signal, inject, output, effect } from '@angular/core';
+import { Component, signal, inject, output, effect, OnInit } from '@angular/core';
 import { Button } from '../ui/button/button';
 import { InterfaceNavigationReponse } from 'src/app/shared/models/interface.models';
 import { Navigation } from '../navigation/navigation';
@@ -14,7 +14,7 @@ import { Notification } from '@services/notification';
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class Header {
+export class Header implements OnInit {
   // services injection
   interfaceService = inject(Interface);
   notificationService = inject(Notification);
@@ -23,25 +23,26 @@ export class Header {
   interfaceForNavigationComponent = output<InterfaceNavigationReponse>();
 
   isNavigationOverlay = signal<boolean>(false);
-  interfaceNavigation = signal<InterfaceNavigationReponse | undefined>({}); // async data from Interface service
+  interfaceNavigation = signal<InterfaceNavigationReponse | undefined>({});
 
-  constructor() {
-    effect(() => {
-      const navigationResource = this.interfaceService.getMainNavigation;
 
-      // Check if value exists 
-      if (navigationResource.value()) {
-        const data = navigationResource.value()!;
-        this.interfaceNavigation.set(data);
-        this.interfaceForNavigationComponent.emit(data);
-      }
 
-      // Check if errors exist
-      if (navigationResource.error()) {
-        this.interfaceNavigation.set({});
-      }
-    });
+  constructor() { }
+
+
+
+  /**
+   * Loading main navigation interface
+   */
+  async ngOnInit() {
+    const data = await this.interfaceService.loadMainNavigation();
+    
+    if (data) {
+      this.interfaceNavigation.set(data);
+      this.interfaceForNavigationComponent.emit(data);
+    }
   }
+
 
 
   /**
@@ -51,6 +52,8 @@ export class Header {
     this.isNavigationOverlay.set(!this.isNavigationOverlay());
   }
 
+
+  
   /**
    * Method to configure the action of the notification
    */
