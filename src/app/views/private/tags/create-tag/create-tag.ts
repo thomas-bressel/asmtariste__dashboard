@@ -1,13 +1,20 @@
+// Angular imports
 import { Component, inject, signal, effect } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Form } from '@services/form';
-import { InputField } from 'src/app/components/ui/input-field/input-field';
-import { Button } from 'src/app/components/ui/button/button';
-import { SelectField } from 'src/app/components/ui/select-field/select-field';
 import { Router, ActivatedRoute } from '@angular/router';
+
+// Service imports
+import { Form } from '@services/form';
 import { Loading } from '@services/loading';
 import { Tag } from '@services/tag';
 import { Notification } from '@services/notification';
+
+// Components import
+import { InputField } from 'src/app/components/ui/input-field/input-field';
+import { Button } from 'src/app/components/ui/button/button';
+import { SelectField } from 'src/app/components/ui/select-field/select-field';
+
+
 @Component({
   selector: 'section[app-create-tag]',
   imports: [ReactiveFormsModule, InputField, Button, SelectField],
@@ -73,8 +80,6 @@ export class CreateTag {
    * @param type 
    */
   handleSelectBoxValueChanged(value: string, type: string) {
-    console.log('Option value changed:', value);
-
     if (type === 'textColor') {
       this.colorValue.set(value);
     } else if (type === 'backgroundColor') {
@@ -85,7 +90,10 @@ export class CreateTag {
   }
 
 
-
+/**
+ * Send datas 
+ * @returns 
+ */
   async onSubmit() {
 
     if (this.createTagForm().valid) {
@@ -110,12 +118,29 @@ export class CreateTag {
           this.loadingService.hide();
           return;
         }
+        
+      // Build the new tag with the received id
+      const newTag = {
+        id_tags: data,
+        label: label,
+        color: color,
+        background_color: background_color,
+        border_color: border_color,
+        is_display: true
+      };
 
+      // Add the new tag to the old tag list
+      this.tagService.addTagToStore(newTag);
+
+        // Send a notification
         this.notificationService.configNotification('green');
-        this.notificationService.displayNotification("TAG_CREATE_SUCCESS", 2000, 'dashboard', 'client', false);
+        this.notificationService.displayNotification("TAG_CREATE_SUCCESS", 2000, '/dashboard/tags', 'client', false);
 
       } catch (error) {
         this.loadingService.hide();
+      } finally {
+        this.loadingService.hide();
+
       }
 
 
@@ -125,12 +150,12 @@ export class CreateTag {
   }
 
 
-    /**
-     * Cancel the form and back to its parent route
-     */
-    onCancel() {
-      this.createTagForm().reset();
-      this.router.navigate(['../'], { relativeTo: this.route });
-    }
-
+  /**
+   * Cancel the form and back to its parent route
+   */
+  onCancel() {
+    this.createTagForm().reset();
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
+
+}

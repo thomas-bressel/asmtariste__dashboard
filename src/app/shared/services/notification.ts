@@ -13,6 +13,7 @@ export class Notification {
   readonly notificationMessages: Record<string, string> = {
     'LOGIN_SUCCESS': 'Connexion réussie',
     'IS_LOGOUT' : 'Vous êtes sur le point de fermer votre session',
+    'TAG_CREATE_SUCCESS' : 'Le nouveau tag à été ajouté avec succès.',
     'logout-success': 'Déconnexion réussie',
     'session-invalid': 'Votre session est invalide, veuillez vous reconnecter'
   }
